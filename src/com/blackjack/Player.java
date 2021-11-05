@@ -2,14 +2,11 @@ package com.blackjack;
 
 class Player {
     // FIELDS
-    private String name;
-    private double score; // or maybe chips. betting points
-
     private Hand hand; // or Hand. Dealer
     private String name;
     private double score; // or maybe chips. betting points
 
-    private handDisplay hand; // a hand? Dealer & Player could have 'Hands'
+    private handDisplay handDisplay; // a hand? Dealer & Player could have 'Hands'
     private double handTotalScore;
 
     // CTORS

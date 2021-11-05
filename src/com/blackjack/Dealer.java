@@ -1,11 +1,13 @@
 package com.blackjack;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 class Dealer {
     private Deck deck;
     private int cardTotal;
-    private Map<String, Card> cardsInHand;
+    private List<String> cardsInHand = new ArrayList<>();
     private handDisplay handDisplay;
 
     private Dealer() {
