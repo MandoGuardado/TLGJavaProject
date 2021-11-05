@@ -1,19 +1,19 @@
 package com.blackjack;
 
 public enum Card {
-    ACE_CLOVER("Ace of Clover", 10, 1 , Suit.CLUBS),
-    EIGHT_CLOVER("Eight of Clover", 8, 8,Suit.CLUBS),
-    FIVE_CLOVER("Five of Clover", 5, 5, Suit.CLUBS),
-    FOUR_CLOVER("Four of Clover", 4, 4, Suit.CLUBS),
-    JACK_CLOVER("Jack of Clover", 10, 10, Suit.CLUBS),
-    KING_CLOVER("King of Clover", 10, 10, Suit.CLUBS),
-    NINE_CLOVER("Nine of Clover", 9, 9, Suit.CLUBS),
-    QUEEN_CLOVER("Queen of Clover", 10, 10, Suit.CLUBS),
-    SEVEN_CLOVER("Seven of Clover", 7, 7, Suit.CLUBS),
-    SIX_CLOVER("Six of Clover", 6, 6, Suit.CLUBS),
-    TEN_CLOVER("Ten of Clover", 10, 10, Suit.CLUBS),
-    THREE_CLOVER("Three of Clover", 3, 3, Suit.CLUBS),
-    TWO_CLOVER("Two of Clover", 2, 2,Suit.CLUBS),
+    ACE_CLUBS("Ace of Clover", 10, 1 , Suit.CLUBS),
+    EIGHT_CLUBS("Eight of Clover", 8, 8,Suit.CLUBS),
+    FIVE_CLUBS("Five of Clover", 5, 5, Suit.CLUBS),
+    FOUR_CLUBS("Four of Clover", 4, 4, Suit.CLUBS),
+    JACK_CLUBS("Jack of Clover", 10, 10, Suit.CLUBS),
+    KING_CLUBS("King of Clover", 10, 10, Suit.CLUBS),
+    NINE_CLUBS("Nine of Clover", 9, 9, Suit.CLUBS),
+    QUEEN_CLUBS("Queen of Clover", 10, 10, Suit.CLUBS),
+    SEVEN_CLUBS("Seven of Clover", 7, 7, Suit.CLUBS),
+    SIX_CLUBS("Six of Clover", 6, 6, Suit.CLUBS),
+    TEN_CLUBS("Ten of Clover", 10, 10, Suit.CLUBS),
+    THREE_CLUBS("Three of Clover", 3, 3, Suit.CLUBS),
+    TWO_CLUBS("Two of Clover", 2, 2,Suit.CLUBS),
 
 
     ACE_SPADES("Ace of Spades", 10, 1 , Suit.SPADES),
