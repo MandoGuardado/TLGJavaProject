@@ -1,5 +1,11 @@
 package com.blackjack.controller;
 
+import com.blackjack.ShuffleCards;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class BlackJackApp {
 
     public void playGame(){
@@ -31,8 +37,17 @@ public class BlackJackApp {
         System.out.println("Playing Blackjack ");
     }
 
-    private void shuffleCards() {
-        System.out.println("Dealing cards.........");
+    private void shuffleCards(){
+
+
+        ShuffleCards message = null;
+        try {
+            message = new ShuffleCards();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert message != null;
+        message.start();
 
     }
 
@@ -49,15 +64,14 @@ public class BlackJackApp {
     }
 
     private void greeting() {
-        String title = "\n" +
-                " __          __  _                            _______      ____  _            _    _            _    \n" +
-                " \\ \\        / / | |                          |__   __|    |  _ \\| |          | |  (_)          | |   \n" +
-                "  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___     | | ___   | |_) | | __ _  ___| | ___  __ _  ___| | __\n" +
-                "   \\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\    | |/ _ \\  |  _ <| |/ _` |/ __| |/ / |/ _` |/ __| |/ /\n" +
-                "    \\  /\\  /  __/ | (_| (_) | | | | | |  __/    | | (_) | | |_) | | (_| | (__|   <| | (_| | (__|   < \n" +
-                "     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|    |_|\\___/  |____/|_|\\__,_|\\___|_|\\_\\ |\\__,_|\\___|_|\\_\\\n" +
-                "                                                                                 _/ |                \n" +
-                "                                                                                |__/                 \n";
+        String title= "";
+
+        try {
+            title = Files.readString(Path.of("welcome_banner.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         System.out.println(title);
     }
 
