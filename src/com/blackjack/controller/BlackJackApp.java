@@ -1,14 +1,19 @@
 package com.blackjack.controller;
 
+import com.blackjack.ShuffleCards;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.util.Scanner;
 
 public class BlackJackApp {
-    private Scanner scanner = new Scanner(System.in);
 
     public void playGame(){
         greeting();
-        String name = promptName();
-        char difficulty = promptDifficulty();
+        promptName();
+        promptDifficulty();
         placeBet();
         shuffleCards();
         playBlackJack();
@@ -43,28 +48,12 @@ public class BlackJackApp {
         System.out.println("Please place your bet.");
     }
 
-    private char promptDifficulty() {
-        boolean validInput = false;
-        char difficulty = 'E';
-
-        while (!validInput){
-            System.out.println("Please select your difficulty level: Easy-E, Medium-M, Hard-H\n");
-            String input = scanner.nextLine().toUpperCase();
-
-            if (input.equals("E")) {    // or M, or H here?
-                difficulty = 'E';                                   // setdiff here?, does this app have the player?
-                System.out.println("EASY difficulty selected");
-                validInput = true;
-            }
-        }
-        return difficulty;
+    private void promptDifficulty() {
+        System.out.println("Level of difficulty: Hard-H, Medium-M, Easy-E");
     }
 
-    private String promptName() {
-        System.out.println("Please enter your name: ");
-        String input = scanner.nextLine();
-
-        return input;
+    private void promptName() {
+        System.out.println("Please provide us with your name");
     }
 
     private void greeting() {
