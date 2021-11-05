@@ -5,18 +5,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ShuffleCards extends Thread  {
-    private String goodByeMessage = "" ;
+    private String message = "" ;
 
     public ShuffleCards() throws IOException {
         setName("Shuffle Reader");
 
-        setGoodByeMessage(Files.readString(Path.of("shuffling_banner.txt")));
+        setMessage(Files.readString(Path.of("shuffling_banner.txt")));
 
     }
 
 
     public void run(){
-        System.out.print(getGoodByeMessage());
+        System.out.print(getMessage());
 
         for (int i = 0; i < 75; i++) {
             System.out.print("*");
@@ -31,11 +31,11 @@ public class ShuffleCards extends Thread  {
         }
     }
 
-    public String getGoodByeMessage() {
-        return goodByeMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setGoodByeMessage(String goodByeMessage) {
-        this.goodByeMessage = goodByeMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
