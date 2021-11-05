@@ -16,19 +16,19 @@ public class Deck {
 
 
     private void setUpDeckMap() {
-        deckMap.put(Card.ACE_CLOVER.getName(), Card.ACE_CLOVER);
-        deckMap.put(Card.TWO_CLOVER.getName(), Card.TWO_CLOVER);
-        deckMap.put(Card.THREE_CLOVER.getName(), Card.THREE_CLOVER);
-        deckMap.put(Card.FOUR_CLOVER.getName(), Card.FOUR_CLOVER);
-        deckMap.put(Card.FIVE_CLOVER.getName(), Card.FIVE_CLOVER);
-        deckMap.put(Card.SIX_CLOVER.getName(), Card.SIX_CLOVER);
-        deckMap.put(Card.SEVEN_CLOVER.getName(), Card.SEVEN_CLOVER);
-        deckMap.put(Card.EIGHT_CLOVER.getName(), Card.EIGHT_CLOVER);
-        deckMap.put(Card.NINE_CLOVER.getName(), Card.NINE_CLOVER);
-        deckMap.put(Card.TEN_CLOVER.getName(), Card.TEN_CLOVER);
-        deckMap.put(Card.JACK_CLOVER.getName(), Card.JACK_CLOVER);
-        deckMap.put(Card.QUEEN_CLOVER.getName(), Card.QUEEN_CLOVER);
-        deckMap.put(Card.KING_CLOVER.getName(), Card.KING_CLOVER);
+        deckMap.put(Card.ACE_CLUBS.getName(), Card.ACE_CLUBS);
+        deckMap.put(Card.TWO_CLUBS.getName(), Card.TWO_CLUBS);
+        deckMap.put(Card.THREE_CLUBS.getName(), Card.THREE_CLUBS);
+        deckMap.put(Card.FOUR_CLUBS.getName(), Card.FOUR_CLUBS);
+        deckMap.put(Card.FIVE_CLUBS.getName(), Card.FIVE_CLUBS);
+        deckMap.put(Card.SIX_CLUBS.getName(), Card.SIX_CLUBS);
+        deckMap.put(Card.SEVEN_CLUBS.getName(), Card.SEVEN_CLUBS);
+        deckMap.put(Card.EIGHT_CLUBS.getName(), Card.EIGHT_CLUBS);
+        deckMap.put(Card.NINE_CLUBS.getName(), Card.NINE_CLUBS);
+        deckMap.put(Card.TEN_CLUBS.getName(), Card.TEN_CLUBS);
+        deckMap.put(Card.JACK_CLUBS.getName(), Card.JACK_CLUBS);
+        deckMap.put(Card.QUEEN_CLUBS.getName(), Card.QUEEN_CLUBS);
+        deckMap.put(Card.KING_CLUBS.getName(), Card.KING_CLUBS);
 
         deckMap.put(Card.ACE_DIAMONDS.getName(), Card.ACE_DIAMONDS);
         deckMap.put(Card.TWO_DIAMONDS.getName(), Card.TWO_DIAMONDS);
