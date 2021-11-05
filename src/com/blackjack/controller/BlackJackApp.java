@@ -15,7 +15,8 @@ public class BlackJackApp {
     }
 
     private void goodbyeMessage() {
-        System.out.println("Thank you for playing.");
+
+
     }
 
     private void prompUserToContinuePlaying() {
@@ -48,7 +49,16 @@ public class BlackJackApp {
     }
 
     private void greeting() {
-        System.out.println("Hello Welcome to BlackJack");
+        String title = "\n" +
+                " __          __  _                            _______      ____  _            _    _            _    \n" +
+                " \\ \\        / / | |                          |__   __|    |  _ \\| |          | |  (_)          | |   \n" +
+                "  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___     | | ___   | |_) | | __ _  ___| | ___  __ _  ___| | __\n" +
+                "   \\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\    | |/ _ \\  |  _ <| |/ _` |/ __| |/ / |/ _` |/ __| |/ /\n" +
+                "    \\  /\\  /  __/ | (_| (_) | | | | | |  __/    | | (_) | | |_) | | (_| | (__|   <| | (_| | (__|   < \n" +
+                "     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|    |_|\\___/  |____/|_|\\__,_|\\___|_|\\_\\ |\\__,_|\\___|_|\\_\\\n" +
+                "                                                                                 _/ |                \n" +
+                "                                                                                |__/                 \n";
+        System.out.println(title);
     }
 
 
