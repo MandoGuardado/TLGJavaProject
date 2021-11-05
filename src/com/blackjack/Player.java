@@ -1,16 +1,24 @@
 package com.blackjack;
 
+import java.util.List;
+
 class Player {
     // FIELDS
-    private Hand hand; // or Hand. Dealer
     private String name;
     private double score; // or maybe chips. betting points
     private char difficulty;
 
+//    private Hand hand; // or Hand. Dealer
     private handDisplay handDisplay; // a hand? Dealer & Player could have 'Hands'
     private double handTotalScore;
+    private List<String> currentHand;
+
 
     // CTORS
+
+    /**
+     *  do we want to make a Player Factory?
+     */
     public Player(String name, double score) {
     }
 
