@@ -32,6 +32,9 @@ public class Player {
         score -= betAmount;
     }
 
+    public void addWinnings(double winnings){
+        score += winnings;
+    }
     // GETTERS/SETTERS
     // x
 

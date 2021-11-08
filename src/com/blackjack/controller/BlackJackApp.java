@@ -15,7 +15,6 @@ public class BlackJackApp {
     private Deck deck = new Deck();
     private RandomIntGenerator intGenerator = new RandomIntGenerator();
 
-
     private double pot = 0;     // pot for betting calculations
     private boolean isGameOver = false;
     private boolean isBlackJackOver = false;
@@ -111,6 +110,7 @@ public class BlackJackApp {
     private void determineWinner(String name) {
         int playersFinalScore = player.getHand().getHandScore();
         int dealersFinalScore = dealer.getHand().getHandScore();
+        int winnerCase;     // to determine win cases in updateScore()
 
         if (playersFinalScore > 21 && dealersFinalScore > 21) {
             System.out.println("Dealer Wins! " + name +" went over 21.");
@@ -130,7 +130,7 @@ public class BlackJackApp {
         } else {
             System.out.println("Dealer wins!");
         }
-
+//        updateScore(winnerCase);
     }
 
     private String randomCardKey() {
@@ -173,8 +173,25 @@ public class BlackJackApp {
     }
 
 
-    private void updateScore() {
-        System.out.println("John Doe you score is:1000 points ");
+    private void updateScore(int winnerCase) {
+        switch (winnerCase) {
+            case 0:
+                // player loses, bet taken by dealer
+                // nothing happens **handled by initial bet() by Player
+                break;
+            case 1:
+                // player wins, win bet amount; ex: bet 20, add 20*2 to score
+                player.addWinnings(pot * 2);
+                break;
+            case 2:
+                // player blackJack, win bet amount x 1.5;  ex: bet 20, add 20*2.5
+                player.addWinnings(pot * 2.5);
+                break;
+            case 3:
+                // draw (or push), player retains bet; ex: bet 20, add 20
+                player.addWinnings(pot);
+                break;
+        }
     }
 
     private void playBlackJack() {
