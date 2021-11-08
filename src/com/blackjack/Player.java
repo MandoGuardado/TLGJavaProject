@@ -28,7 +28,8 @@ public class Player {
     public void stand() {
     }
 
-    public void bet() {
+    public void bet(double betAmount) {
+        score -= betAmount;
     }
 
     // GETTERS/SETTERS

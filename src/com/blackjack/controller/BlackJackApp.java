@@ -16,6 +16,7 @@ public class BlackJackApp {
     private RandomIntGenerator intGenerator = new RandomIntGenerator();
 
 
+    private double pot = 0;     // pot for betting calculations
     private boolean isGameOver = false;
     private boolean isBlackJackOver = false;
 
@@ -63,7 +64,7 @@ public class BlackJackApp {
                     }
                 }
 
-//            placeBet();
+            placeBet();
 //            playBlackJack();
 //            updateScore();
 //            prompUserToContinuePlaying();
@@ -148,9 +149,6 @@ public class BlackJackApp {
         System.out.println(title);
     }
 
-    // prompt user for Name
-    // if name exists, return name and last chip value
-    // if name does not exist, make new player
     private String promptName() {
         System.out.println("Please enter your name: ");
 
@@ -185,7 +183,18 @@ public class BlackJackApp {
 
 
     private void placeBet() {
-        System.out.println("Please place your bet.");
+        boolean validBet = false;
+
+        while (!validBet) {
+            System.out.println("Please place your bet (minimum of 5): ");
+            String input = scanner.nextLine();
+            double bet = Double.parseDouble(input); // is there an exception problem here if input isn't double?
+            if (bet <= player.getScore() && bet >= 5) {
+                player.bet(bet);
+                pot += bet;
+                validBet = true;
+            }
+        }
     }
 
 
