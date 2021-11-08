@@ -85,7 +85,7 @@ public class Deck {
         return deckMap;
     }
 
-    public Collection<String> getCardKeyReferences() {
+    public List<String> getCardKeyReferences() {
         return cardKeyReferences;
     }
 
