@@ -29,6 +29,7 @@ public class BlackJackApp {
 
 
         while (!isBlackJackOver) {
+            placeBet();
 
 //        dealer.initiatesShuffleCards();
 
@@ -63,7 +64,6 @@ public class BlackJackApp {
                     }
                 }
 
-            placeBet();
 //            playBlackJack();
 //            updateScore();
 //            prompUserToContinuePlaying();
@@ -110,27 +110,34 @@ public class BlackJackApp {
     private void determineWinner(String name) {
         int playersFinalScore = player.getHand().getHandScore();
         int dealersFinalScore = dealer.getHand().getHandScore();
-        int winnerCase;     // to determine win cases in updateScore()
+        String winnerCase;     // to determine win cases in updateScore()
 
         if (playersFinalScore > 21 && dealersFinalScore > 21) {
             System.out.println("Dealer Wins! " + name +" went over 21.");
         }
         if (playersFinalScore == dealersFinalScore) {
-            System.out.println("Its a draw");
+            System.out.println("Its a draw! Bet returned to player ");
+            winnerCase = "draw";
         } else if (dealersFinalScore == 0) {
-            System.out.println( name + " looses! Dealer had BlackJack ");
+            System.out.println(name + " looses! Dealer got a BlackJack ");
+            winnerCase = "lose";
         } else if (playersFinalScore == 0) {
-            System.out.println(name + " wins! " + name +"has BlackJack.");
+            System.out.println(name + " wins! " + name +" got a BlackJack!");
+            winnerCase = "blackjack";
         } else if (playersFinalScore > 21) {
-            System.out.println("Dealer wins! " + name +" went over.");
+            System.out.println("Dealer wins! " + name +" went over 21.");
+            winnerCase = "lose";
         } else if (dealersFinalScore > 21) {
-            System.out.println( name +" wins! Dealer went over.");
+            System.out.println( name +" wins! Dealer went over 21.");
+            winnerCase = "win";
         } else if (playersFinalScore > dealersFinalScore) {
             System.out.println(name + " wins! ");
+            winnerCase = "win";
         } else {
             System.out.println("Dealer wins!");
+            winnerCase = "lose";
         }
-//        updateScore(winnerCase);
+        updateScore(winnerCase);
     }
 
     private String randomCardKey() {
@@ -173,21 +180,21 @@ public class BlackJackApp {
     }
 
 
-    private void updateScore(int winnerCase) {
+    private void updateScore(String winnerCase) {
         switch (winnerCase) {
-            case 0:
+            case "lose":
                 // player loses, bet taken by dealer
                 // nothing happens **handled by initial bet() by Player
                 break;
-            case 1:
+            case "win":
                 // player wins, win bet amount; ex: bet 20, add 20*2 to score
                 player.addWinnings(pot * 2);
                 break;
-            case 2:
+            case "blackjack":
                 // player blackJack, win bet amount x 1.5;  ex: bet 20, add 20*2.5
                 player.addWinnings(pot * 2.5);
                 break;
-            case 3:
+            case "draw":
                 // draw (or push), player retains bet; ex: bet 20, add 20
                 player.addWinnings(pot);
                 break;
