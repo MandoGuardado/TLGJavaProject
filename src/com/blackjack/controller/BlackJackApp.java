@@ -32,9 +32,10 @@ public class BlackJackApp {
 
 
             for (int i = 0; i < 2; i++) {
-                String playerRandKey = deck.getCardKeyReferences().get(intGenerator.randomIndex());
-                String dealerRandKey = deck.getCardKeyReferences().get(intGenerator.randomIndex());
-                player.getHand().getCards().put(playerRandKey, deck.getDeckMap().get(playerRandKey));
+                String playerRandomKey= randomCardKey();
+                player.getHand().getCards().put(playerRandomKey, deck.getDeckMap().get(playerRandomKey));
+
+                String dealerRandKey= randomCardKey();
                 dealer.getHand().getCards().put(dealerRandKey, deck.getDeckMap().get(dealerRandKey));
             }
             player.getHand().updateInfo();
@@ -55,7 +56,7 @@ public class BlackJackApp {
                     System.out.println("Type Y to 'Hit' or N to  'Stand' ");
                     String response = scanner.nextLine().toUpperCase();
                     if ("Y".equals(response)){
-                        String randomCardKey = deck.getCardKeyReferences().get(intGenerator.randomIndex());
+                        String randomCardKey = randomCardKey();
                         player.getHand().getCards().put(randomCardKey, deck.getDeckMap().get(randomCardKey));
                         player.getHand().updateInfo();
                     }
@@ -70,7 +71,7 @@ public class BlackJackApp {
 //            prompUserToContinuePlaying();
             }
             while (dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17){
-                String randomCardKey = deck.getCardKeyReferences().get(intGenerator.randomIndex());
+                String randomCardKey = randomCardKey();
                 dealer.getHand().getCards().put(randomCardKey,deck.getDeckMap().get(randomCardKey) );
                 dealer.getHand().updateInfo();
             }
@@ -93,10 +94,12 @@ public class BlackJackApp {
 
 
         }
-
-
         goodbyeMessage();
 
+    }
+
+    private String randomCardKey() {
+        return deck.getCardKeyReferences().get(intGenerator.randomIndex());
     }
 
     private void greeting() {
