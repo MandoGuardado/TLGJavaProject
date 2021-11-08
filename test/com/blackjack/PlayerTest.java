@@ -9,7 +9,7 @@ public class PlayerTest {
 
     @Before
     public void setUp(){
-        player = new Player("Bob", 0.0);
+       // player = new Player("Bob", 0.0);
         // new
     }
 
