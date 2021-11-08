@@ -16,53 +16,50 @@ public class BlackJackApp {
     private Map<String, Double> playerMap = loadPlayerMap();
 
 
-    private boolean isHandOver =false;
     private boolean isGameOver = false;
+    private boolean isBlackJackOver = false;
 
 
-    public void playGame(){
+    public void playGame() {
         greeting();
-//        String name = promptName();
-//        player = new Player(name);
-        player = new Player("Armando"); //todo change back to accepting
 
-        while (!isGameOver) {
+        String name = promptName();
+        char difficulty = promptDifficulty();
+        player = new Player(name, difficulty);
+
+
+        while (!isBlackJackOver) {
 
 //        dealer.initiatesShuffleCards();
 
-
-
             for (int i = 0; i < 2; i++) {
-                String playerRandomKey= randomCardKey();
+                String playerRandomKey = randomCardKey();
                 player.getHand().getCards().put(playerRandomKey, deck.getDeckMap().get(playerRandomKey));
 
-                String dealerRandKey= randomCardKey();
+                String dealerRandKey = randomCardKey();
                 dealer.getHand().getCards().put(dealerRandKey, deck.getDeckMap().get(dealerRandKey));
             }
             player.getHand().updateInfo();
             dealer.getHand().updateInfo();
 
 
-
-            while (!isHandOver){
+            while (!isGameOver) {
                 Integer players_score = player.getHand().calculateScore();
                 Integer dealers_score = dealer.getHand().calculateScore();
 
-                System.out.println("Player Cards: " + player.getHand().getArrayValues() + ", Current Score: " + players_score );
+                System.out.println(name +" Cards: " + player.getHand().getArrayValues() + ", Current Score: " + players_score);
                 System.out.println("Dealer Cards: " + dealer.getHand().getArrayValues() + ", Current Score: " + dealers_score);
-                if (players_score == 0 || dealers_score == 0 || players_score > 21){
-                    isHandOver = true;
-                }
-                else {
+                if (players_score == 0 || dealers_score == 0 || players_score > 21) {
+                    isGameOver = true;
+                } else {
                     System.out.println("Type Y to 'Hit' or N to  'Stand' ");
                     String response = scanner.nextLine().toUpperCase();
-                    if ("Y".equals(response)){
+                    if ("Y".equals(response)) {
                         String randomCardKey = randomCardKey();
                         player.getHand().getCards().put(randomCardKey, deck.getDeckMap().get(randomCardKey));
                         player.getHand().updateInfo();
-                    }
-                    else{
-                        isHandOver = true;
+                    } else {
+                        isGameOver = true;
                     }
                 }
 
@@ -71,26 +68,28 @@ public class BlackJackApp {
 //            updateScore();
 //            prompUserToContinuePlaying();
             }
-            while (dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17){
+            while (dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17) {
                 String randomCardKey = randomCardKey();
-                dealer.getHand().getCards().put(randomCardKey,deck.getDeckMap().get(randomCardKey) );
+                dealer.getHand().getCards().put(randomCardKey, deck.getDeckMap().get(randomCardKey));
                 dealer.getHand().updateInfo();
             }
-            System.out.println("Players final hand: " +  player.getHand().getArrayValues() + ", final score: " +  player.getHand().getHandScore());
+            System.out.println();
+            System.out.println(name + " final hand: " + player.getHand().getArrayValues() + ", final score: " + player.getHand().getHandScore());
             System.out.println("Dealers final hand: " + dealer.getHand().getArrayValues() + ", final score: " + dealer.getHand().getHandScore());
 
-            //TODO determine the winner and update the bank amount  for player
+
             System.out.println();
+            determineWinner(name);
 
             System.out.println("Type 'Y' to play another hand.");
-            String endOfGame= scanner.nextLine().toUpperCase();
+            String endOfGame = scanner.nextLine().toUpperCase();
 
-            if (!("Y".equals(endOfGame))){
-                isGameOver = true;
-            }
-            else {
-                System.out.println("Clean up player and dealer variables ");
-             //TODO this is where we will clean up everything.
+            if (!("Y".equals(endOfGame))) {
+                isBlackJackOver = true;
+            } else {
+
+                isGameOver =false;
+                resetGame(name, difficulty);
             }
 
 
@@ -99,12 +98,43 @@ public class BlackJackApp {
 
     }
 
+    private void resetGame(String name, char difficulty) {
+        player = new Player(name, difficulty);
+        dealer = new Dealer();
+    }
+
+
+    private void determineWinner(String name) {
+        int playersFinalScore = player.getHand().getHandScore();
+        int dealersFinalScore = dealer.getHand().getHandScore();
+
+        if (playersFinalScore > 21 && dealersFinalScore > 21) {
+            System.out.println("Dealer Wins! " + name +" went over 21.");
+        }
+        if (playersFinalScore == dealersFinalScore) {
+            System.out.println("Its a draw");
+        } else if (dealersFinalScore == 0) {
+            System.out.println( name + " looses! Dealer had BlackJack ");
+        } else if (playersFinalScore == 0) {
+            System.out.println(name + " wins! " + name +"has BlackJack.");
+        } else if (playersFinalScore > 21) {
+            System.out.println("Dealer wins! " + name +" went over.");
+        } else if (dealersFinalScore > 21) {
+            System.out.println( name +" wins! Dealer went over.");
+        } else if (playersFinalScore > dealersFinalScore) {
+            System.out.println(name + " wins! ");
+        } else {
+            System.out.println("Dealer wins!");
+        }
+
+    }
+
     private String randomCardKey() {
         return deck.getCardKeyReferences().get(intGenerator.randomIndex());
     }
 
     private void greeting() {
-        String title= "";
+        String title = "";
 
         try {
             title = Files.readString(Path.of("welcome_banner.txt"));
@@ -134,7 +164,7 @@ public class BlackJackApp {
         boolean validInput = false;
         char difficulty = 'E';
 
-        while (!validInput){
+        while (!validInput) {
             System.out.println("Please select your difficulty level: Easy-E, Medium-M, Hard-H\n");
             String input = scanner.nextLine().toUpperCase();
 
@@ -148,7 +178,6 @@ public class BlackJackApp {
     }
 
 
-
     private void updateScore() {
         System.out.println("John Doe you score is:1000 points ");
     }
@@ -158,17 +187,14 @@ public class BlackJackApp {
     }
 
 
-
     private void placeBet() {
         System.out.println("Please place your bet.");
     }
 
 
-
     private void prompUserToContinuePlaying() {
         System.out.println("Would you like to play another hand? ");
     }
-
 
 
     private void goodbyeMessage() {
@@ -177,12 +203,12 @@ public class BlackJackApp {
     }
 
     // Accessor Methods - Setter and Getters
-    public boolean isHandOver() {
-        return isHandOver;
+    public boolean isGameOver() {
+        return isGameOver;
     }
 
-    public void setHandOver(boolean handOver) {
-        isHandOver = handOver;
+    public void setGameOver(boolean gameOver) {
+        isGameOver = gameOver;
     }
 
     private Map<String, Double> loadPlayerMap () {
@@ -203,7 +229,6 @@ public class BlackJackApp {
         }
         return  playerMap;
     }
-
 
 
 }

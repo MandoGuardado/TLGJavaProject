@@ -16,7 +16,7 @@ public class Hand {
     //Business methods 
     
     public void updateInfo(){
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
         Integer sum = 0;
         for (Map.Entry<String, Card> entry: getCards().entrySet()) {
             Card card = entry.getValue();
@@ -37,7 +37,9 @@ public class Hand {
         if(getArrayValues().contains(11) && getHandScore() > 21){
             int returnIndex = getArrayValues().indexOf(11);
             getArrayValues().set(returnIndex, 1);
+            result = getHandScore();
         }
+
         setHandScore(result);
 
         return result;
