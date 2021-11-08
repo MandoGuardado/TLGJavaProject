@@ -1,22 +1,29 @@
 package com.blackjack;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-class Dealer {
-    private Deck deck;
-    private int cardTotal;
-    private List<String> cardsInHand = new ArrayList<>();
-    private handDisplay handDisplay;
+public class Dealer {
+    private Deck deck = new Deck();
+    private Hand hand = new Hand(); // or Hand. Dealer
 
-    private Dealer() {
+    public Dealer() {
+
+    }
+    public void initiatesShuffleCards() {
+        ShuffleCards message = null;
+        try {
+            message = new ShuffleCards();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert message != null;
+        message.start();
 
     }
 
-    private void shuffle() {
-
-    }
 
     private void initialDeal() {
 
@@ -24,6 +31,25 @@ class Dealer {
 
     private void deal() {
 
+    }
+
+    //Accessor methods ( Setter and getters)
+
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = hand;
     }
 
 }
