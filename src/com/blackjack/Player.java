@@ -5,23 +5,18 @@ import java.util.List;
 public class Player {
     // FIELDS
     private String name;
-    private char difficulty;
-    private long bank = 1000; // or maybe chips. betting point
-    private Hand hand = new Hand(); // or Hand. Dealer
+    private double chips = 200;     // all players created with 200
+    private Hand hand = new Hand(); // aced difficulty for now
+
+    private List<String> currentHand;
 
     // CTORS
 
-    public Player(String name, char difficulty) {
+    public Player(String name) {
         setName(name);
-        setDifficulty(difficulty);
     }
 
-    /**
-     *  do we want to make a Player Factory?
-     */
-
-    public Player(String name, double score) {
-    }
+    // Player (name, chips)
 
     // BUSINESS
     public void hit() {
@@ -45,21 +40,13 @@ public class Player {
         this.name = name;
     }
 
-    public char getDifficulty() {
-        return difficulty;
+
+    public double getChips() {
+        return chips;
     }
 
-    public void setDifficulty(char difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public long getBank() {
-        return bank;
-    }
-
-    public void setBank(long bank) {
-
-        this.bank = bank;
+    public List<String> getCurrentHand() {
+        return currentHand;
     }
 
     public Hand getHand() {

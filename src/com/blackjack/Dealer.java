@@ -29,7 +29,7 @@ public class Dealer {
 
     }
 
-    private void deal() {
+    private void dealCard() {
 
     }
 
