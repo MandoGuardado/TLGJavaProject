@@ -2,23 +2,24 @@ package com.blackjack;
 
 import java.util.List;
 
-class Player {
+public class Player {
     // FIELDS
     private String name;
-    private double score; // or maybe chips. betting points
     private char difficulty;
-
-//    private Hand hand; // or Hand. Dealer
-    private handDisplay handDisplay; // a hand? Dealer & Player could have 'Hands'
-    private double handTotalScore;
-    private List<String> currentHand;
-
+    private long bank = 1000; // or maybe chips. betting point
+    private Hand hand = new Hand(); // or Hand. Dealer
 
     // CTORS
+
+    public Player(String name, char difficulty) {
+        setName(name);
+        setDifficulty(difficulty);
+    }
 
     /**
      *  do we want to make a Player Factory?
      */
+
     public Player(String name, double score) {
     }
 
@@ -44,20 +45,29 @@ class Player {
         this.name = name;
     }
 
-    public double getScore() {
-        return score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-
     public char getDifficulty() {
         return difficulty;
     }
 
     public void setDifficulty(char difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public long getBank() {
+        return bank;
+    }
+
+    public void setBank(long bank) {
+
+        this.bank = bank;
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = hand;
     }
 
     @Override
