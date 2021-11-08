@@ -50,7 +50,7 @@ public class BlackJackApp {
 
                 System.out.println(name +" Cards: " + player.getHand().getArrayValues() + ", Current Score: " + players_score);
                 System.out.println("Dealer Cards: " + dealer.getHand().getArrayValues() + ", Current Score: " + dealers_score);
-                if (players_score == 0 || dealers_score == 0 || players_score > 21) {
+                if (players_score == 0 || dealers_score == 0 || players_score==21 || dealers_score==21 || players_score > 21) {
                     isGameOver = true;
                 } else {
                     System.out.println("Type Y to 'Hit' or N to  'Stand' ");
