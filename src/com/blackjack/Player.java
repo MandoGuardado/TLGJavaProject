@@ -5,6 +5,7 @@ import java.util.List;
 public class Player {
     // FIELDS
     private String name;
+    private char difficulty;
     private double chips = 200;     // all players created with 200
     private Hand hand = new Hand(); // aced difficulty for now
 
@@ -12,8 +13,10 @@ public class Player {
 
     // CTORS
 
-    public Player(String name) {
+    public Player(String name, char difficulty) {
         setName(name);
+        setDifficulty(difficulty);
+
     }
 
     // Player (name, chips)
@@ -55,6 +58,14 @@ public class Player {
 
     public void setHand(Hand hand) {
         this.hand = hand;
+    }
+
+    public char getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(char difficulty) {
+        this.difficulty = difficulty;
     }
 
     @Override
