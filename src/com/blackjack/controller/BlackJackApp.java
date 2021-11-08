@@ -9,6 +9,7 @@ import java.util.*;
 
 public class BlackJackApp {
     private Scanner scanner = new Scanner(System.in);
+    private ScoreBoard board = ScoreBoard.getInstance();
     private Player player;
     private Dealer dealer = new Dealer();
     private Deck deck = new Deck();
@@ -84,6 +85,7 @@ public class BlackJackApp {
             String endOfGame = scanner.nextLine().toUpperCase();
 
             if (!("Y".equals(endOfGame))) {
+                // TODO board.update();
                 isBlackJackOver = true;
             } else {
 
@@ -93,6 +95,7 @@ public class BlackJackApp {
 
 
         }
+        // TODO board.display();
         goodbyeMessage();
 
     }

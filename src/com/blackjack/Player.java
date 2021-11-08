@@ -5,8 +5,8 @@ import java.util.List;
 public class Player {
     // FIELDS
     private String name;
+    private double score = 200;     // all players created with 200
     private char difficulty;
-    private double chips = 200;     // all players created with 200
     private Hand hand = new Hand(); // aced difficulty for now
 
     private List<String> currentHand;
@@ -44,8 +44,8 @@ public class Player {
     }
 
 
-    public double getChips() {
-        return chips;
+    public double getScore() {
+        return score;
     }
 
     public List<String> getCurrentHand() {
