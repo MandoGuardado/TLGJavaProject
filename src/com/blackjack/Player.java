@@ -70,6 +70,9 @@ public class Player {
 
     @Override
     public String toString() {
-        return null;
+        return getClass().getSimpleName() +
+                " name='" + getName() +
+                ", score=" + getScore() +
+                ", difficulty=" + getDifficulty();
     }
 }

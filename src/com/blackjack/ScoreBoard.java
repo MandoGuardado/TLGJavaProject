@@ -13,18 +13,14 @@ package com.blackjack;
  *
  */
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
-public class ScoreBoard {
+public class ScoreBoard implements Serializable {
 
-    private static final String dataFilePath = "data/scoreBoard.dat";
+    private static final String dataFilePath = "data/scoreBoard.csv";
 
     public static ScoreBoard getInstance() {
         ScoreBoard board = null;
@@ -43,6 +39,7 @@ public class ScoreBoard {
         return board;
     }
 
+    private Map<Double, String>  scoreMap = loadScoreMap();
     private Map<Double, Player> rankMap = new TreeMap<>();    // Player data to display <Score, Player>
 
     private  ScoreBoard() {
@@ -50,24 +47,54 @@ public class ScoreBoard {
     }
 
     public void update(Player player) {
+        // this is really ugly right now
 
-        // if player score is higher than lowest on scoreboard, put the new player on the board
-        for (Double score : rankMap.keySet()){
-            if (player.getScore() > score) {  // TODO: ties
-                rankMap.put(player.getScore(), player);
+        for (Double score: scoreMap.keySet()) { // is there a way to just check the smallest?
+            if (player.getScore() > score){
+                scoreMap.put(player.getScore(), player.getName());
             }
-            // only factoring for score right now
-            // to include difficulty
-            // TODO: crop the TreeSet to 10 MAX
         }
+
+
+           // for (Map.Entry<Double, String>)
+                // if player score is higher than lowest on scoreboard, put the new player on the board
+                for (Double score : rankMap.keySet()) {
+                    if (player.getScore() > score) {  // TODO: ties
+                        rankMap.put(player.getScore(), player);
+                    //    ObjectOutputStream o = new ObjectOutputStream()
+                    }
+                    // only factoring for score right now
+                    // to include difficulty
+                    // TODO: crop the TreeSet to 10 MAX
+                }
+
         // else nothing
+    }
+
+    private Map<Double, String> loadScoreMap() {
+        Map<Double, String> map = new TreeMap<>();
+
+        try {
+            List<String> lines = Files.readAllLines(Path.of("data/simple-scoreboard.csv"));
+            for (String line: lines){
+                String[] tokens = line.split(",");
+                Double score = Double.valueOf(tokens[0]);
+                String name = tokens[1];
+
+                map.put(score, name);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 
     public void display() {
         System.out.println("BLACKJACK BETS HIGHSCORE BOARD");
         System.out.println("==============================");
-        Collection<Player> topPlayers = rankMap.values();
-        for (Player player: topPlayers) {
+        Collection<String> topPlayers = scoreMap.values();
+        for (String player: topPlayers) {
             System.out.println(player);
         }
         System.out.println();
