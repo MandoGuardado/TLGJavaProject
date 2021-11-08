@@ -87,6 +87,7 @@ public class BlackJackApp {
             String endOfGame = scanner.nextLine().toUpperCase();
 
             if (!("Y".equals(endOfGame))) {
+                System.out.println("Final Score: " + player.getScore());
                 isBlackJackOver = true;
             } else {
 
@@ -118,10 +119,10 @@ public class BlackJackApp {
         if (playersFinalScore == dealersFinalScore) {
             System.out.println("Its a draw! Bet returned to player ");
             winnerCase = "draw";
-        } else if (dealersFinalScore == 0) {
+        } else if (dealersFinalScore == 0 || dealersFinalScore == 21) {             // added 21 value for BlackJack
             System.out.println(name + " looses! Dealer got a BlackJack ");
             winnerCase = "lose";
-        } else if (playersFinalScore == 0) {
+        } else if (playersFinalScore == 0 || playersFinalScore == 21) {
             System.out.println(name + " wins! " + name +" got a BlackJack!");
             winnerCase = "blackjack";
         } else if (playersFinalScore > 21) {
