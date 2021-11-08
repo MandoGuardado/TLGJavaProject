@@ -43,7 +43,6 @@ public class ScoreBoard {
         return board;
     }
 
-    private Map<Integer, String> scoreMap;    // Scores to compare people
     private Map<Double, Player> rankMap = new TreeMap<>();    // Player data to display <Score, Player>
 
     private  ScoreBoard() {

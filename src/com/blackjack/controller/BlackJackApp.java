@@ -81,11 +81,12 @@ public class BlackJackApp {
             System.out.println();
             determineWinner(name);
 
+            board.update(player);
+
             System.out.println("Type 'Y' to play another hand.");
             String endOfGame = scanner.nextLine().toUpperCase();
 
             if (!("Y".equals(endOfGame))) {
-                // TODO board.update();
                 isBlackJackOver = true;
             } else {
 
@@ -95,7 +96,7 @@ public class BlackJackApp {
 
 
         }
-        // TODO board.display();
+        board.display();
         goodbyeMessage();
 
     }
@@ -151,15 +152,9 @@ public class BlackJackApp {
     // if name exists, return name and last chip value
     // if name does not exist, make new player
     private String promptName() {
-        String result = "Name";
-
         System.out.println("Please enter your name: ");
-        String name = scanner.nextLine();
 
-        boolean newPlayer = true;
-
-
-        return result;
+        return scanner.nextLine();
     }
 
     private char promptDifficulty() {
