@@ -22,9 +22,11 @@ public class BlackJackApp {
 
     public void playGame() {
         greeting();
-//        String name = promptName();
-//        player = new Player(name);
-        player = new Player("Armando"); //todo change back to accepting
+
+        String name = promptName();
+        char difficulty = promptDifficulty();
+        player = new Player(name, difficulty);
+
 
         while (!isBlackJackOver) {
 
