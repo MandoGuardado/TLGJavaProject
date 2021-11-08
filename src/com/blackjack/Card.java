@@ -30,7 +30,7 @@ public enum Card {
     THREE_SPADES("Three of Spades", 3, 3),
     TWO_SPADES("Two of Spades", 2, 2),
 
-    ACE_HEARTS("Ace of Hearts", 10, 1),
+    ACE_HEARTS("Ace of Hearts", 11, 1),
     EIGHT_HEARTS("Eight of Hearts", 8, 8),
     FIVE_HEARTS("Five of Hearts", 5, 5),
     FOUR_HEARTS("Four of Hearts", 4, 4),
@@ -44,7 +44,7 @@ public enum Card {
     THREE_HEARTS("Three of Hearts", 3, 3),
     TWO_HEARTS("Two of Hearts", 2,2),
 
-    ACE_DIAMONDS("Ace of Diamonds", 10, 1 ),
+    ACE_DIAMONDS("Ace of Diamonds", 11, 1 ),
     EIGHT_DIAMONDS("Eight of Diamonds", 8,8),
     FIVE_DIAMONDS("Five of Diamonds", 5, 5),
     FOUR_DIAMONDS("Four of Diamonds", 4, 4),
