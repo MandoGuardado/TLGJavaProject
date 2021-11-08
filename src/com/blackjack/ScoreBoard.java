@@ -20,26 +20,29 @@ import java.util.*;
 
 public class ScoreBoard implements Serializable {
 
-    private static final String dataFilePath = "data/scoreBoard.csv";
+    private static final String dataFilePath = "data/simple-scoreboard.csv";
+    private Map<Double, String> scoreMap = loadScoreMap();
+
 
     public static ScoreBoard getInstance() {
-        ScoreBoard board = null;
+        ScoreBoard board = new ScoreBoard();
 
-        if (Files.exists(Path.of(dataFilePath))){
-            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
-                board = (ScoreBoard) in.readObject();
-            }
-            catch (ClassNotFoundException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            board = new ScoreBoard();
-        }
+        // trying to get it to work, so commented out below
+
+//        if (Files.exists(Path.of(dataFilePath))){
+//            try  {
+//                ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath));
+//                board = (ScoreBoard) in.readObject();
+//            }
+//            catch (ClassNotFoundException | IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        else {
+//            board = new ScoreBoard();
+//        }
         return board;
     }
-
-    private Map<Double, String>  scoreMap = loadScoreMap();
     private Map<Double, Player> rankMap = new TreeMap<>();    // Player data to display <Score, Player>
 
     private  ScoreBoard() {
@@ -93,10 +96,10 @@ public class ScoreBoard implements Serializable {
     public void display() {
         System.out.println("BLACKJACK BETS HIGHSCORE BOARD");
         System.out.println("==============================");
-        Collection<String> topPlayers = scoreMap.values();
-        for (String player: topPlayers) {
-            System.out.println(player);
+
+        for (Map.Entry<Double, String> entry : scoreMap.entrySet()) {
+            System.out.println(entry.getKey() + "  " + entry.getValue());
         }
-        System.out.println();
+
     }
 }

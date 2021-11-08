@@ -140,7 +140,7 @@ public class BlackJackApp {
         String title = "";
 
         try {
-            title = Files.readString(Path.of("welcome_banner.txt"));
+            title = Files.readString(Path.of("images/welcome_banner.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
