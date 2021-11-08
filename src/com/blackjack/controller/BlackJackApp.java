@@ -13,7 +13,6 @@ public class BlackJackApp {
     private Dealer dealer = new Dealer();
     private Deck deck = new Deck();
     private RandomIntGenerator intGenerator = new RandomIntGenerator();
-    private Map<String, Double> playerMap = loadPlayerMap();
 
 
     private boolean isGameOver = false;
@@ -210,26 +209,5 @@ public class BlackJackApp {
     public void setGameOver(boolean gameOver) {
         isGameOver = gameOver;
     }
-
-    private Map<String, Double> loadPlayerMap () {
-        Map<String, Double> playerMap = new HashMap<>();
-
-        try {
-            List<String> lines = Files.readAllLines(Path.of("data/player-records.csv"));
-            for (String line: lines) {
-                String[] tokens = line.split(",");
-                String name = tokens[0];
-                Double chips = Double.valueOf(tokens[1]);
-
-                playerMap.put(name, chips);
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return  playerMap;
-    }
-
-
 
 }
