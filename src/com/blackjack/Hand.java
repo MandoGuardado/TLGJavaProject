@@ -9,7 +9,7 @@ public class Hand {
 
     private Map<String,Card> cards = new HashMap<>();
     private List<Integer> arrayValues;
-    private String cardImages;
+    private HandImage cardImages = new HandImage();
     private Integer handScore;
     
     
@@ -26,6 +26,7 @@ public class Hand {
         }
         setArrayValues(result);
         setHandScore(sum);
+
     }
 
     public Integer calculateScore(){
@@ -68,11 +69,11 @@ public class Hand {
         this.arrayValues = arrayValues;
     }
 
-    public String getCardImages() {
+    public HandImage getCardImages() {
         return cardImages;
     }
 
-    public void setCardImages(String cardImages) {
+    public void setCardImages(HandImage cardImages) {
         this.cardImages = cardImages;
     }
 

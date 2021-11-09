@@ -8,7 +8,6 @@ public class Player {
     private double score = 200;     // all players created with 200
     private char difficulty;
     private Hand hand = new Hand(); // aced difficulty for now
-
     private List<String> currentHand;
 
     // CTORS
@@ -22,7 +21,10 @@ public class Player {
     // Player (name, chips)
 
     // BUSINESS
-    public void hit() {
+    public void hit(String key, Card card) {
+        this.getHand().getCards().put(key,card);
+        getHand().updateInfo();
+        getHand().getCardImages().createHand(card.getSymbol(), card.getSuit());
     }
 
     public void stand() {
@@ -32,9 +34,16 @@ public class Player {
         score -= betAmount;
     }
 
+
     public void addWinnings(double winnings){
         score += winnings;
     }
+
+    public void printPlayerCards(){
+        getHand().getCardImages().printHand();
+    }
+
+
     // GETTERS/SETTERS
     // x
 
