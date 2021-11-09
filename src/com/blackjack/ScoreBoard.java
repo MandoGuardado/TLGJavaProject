@@ -20,7 +20,7 @@ import java.util.*;
 
 public class ScoreBoard implements Serializable {
 
-    private static final String dataFilePath = "data/scoreBoard.csv";
+    private static final String dataFilePath = "data/scoreBoard.dat";
 
     public static ScoreBoard getInstance() {
         ScoreBoard board = null;
@@ -39,49 +39,45 @@ public class ScoreBoard implements Serializable {
         return board;
     }
 
-    private Map<Double, String>  scoreMap = loadScoreMap();
-    private Map<Double, Player> rankMap = new TreeMap<>();    // Player data to display <Score, Player>
+    private SortedMap<Double, String> playerMap = new TreeMap<>();      // player ranked by score <Score, Name>
+    private Map<Integer, Player> rankMap = loadMaps();    // Player data to display <Rank, Player(Score, Name)>
+
 
     private  ScoreBoard() {
         // prevent new
     }
 
     public void update(Player player) {
-        // this is really ugly right now
 
-        for (Double score: scoreMap.keySet()) { // is there a way to just check the smallest?
-            if (player.getScore() > score){
-                scoreMap.put(player.getScore(), player.getName());
-            }
-        }
-
-
-           // for (Map.Entry<Double, String>)
-                // if player score is higher than lowest on scoreboard, put the new player on the board
-                for (Double score : rankMap.keySet()) {
-                    if (player.getScore() > score) {  // TODO: ties
-                        rankMap.put(player.getScore(), player);
-                    //    ObjectOutputStream o = new ObjectOutputStream()
-                    }
-                    // only factoring for score right now
-                    // to include difficulty
-                    // TODO: crop the TreeSet to 10 MAX
+        for (Map.Entry<Double, String> entry : playerMap.entrySet()) {
+            if (player.getScore() > entry.getKey()) {
+                playerMap.put(player.getScore(), player.getName());
+                playerMap.remove(playerMap.firstKey());
+                break;
                 }
+            }
+            // TODO: same score case
 
-        // else nothing
+        updateRankMap();
     }
 
-    private Map<Double, String> loadScoreMap() {
-        Map<Double, String> map = new TreeMap<>();
+    private Map<Integer, Player> loadMaps() {
+        Map<Integer, Player> map = new TreeMap<>();
 
         try {
             List<String> lines = Files.readAllLines(Path.of("data/simple-scoreboard.csv"));
             for (String line: lines){
                 String[] tokens = line.split(",");
-                Double score = Double.valueOf(tokens[0]);
-                String name = tokens[1];
+                int rank = Integer.parseInt(tokens[0]);
+                double score = Double.parseDouble(tokens[1]);
+                String name = tokens[2];
 
-                map.put(score, name);
+                // fill playerMap here to get rank structure
+                this.playerMap.put(score, name);
+
+                // fill rankMap
+                Player player = new Player(name, score);
+                map.put(rank, player);
             }
         }
         catch (IOException e) {
@@ -90,13 +86,41 @@ public class ScoreBoard implements Serializable {
         return map;
     }
 
+    private void updateRankMap(){
+        int rank = 5;
+
+        // rewrite rankMap w/ updated players
+        for (Map.Entry<Double, String> entry : playerMap.entrySet()) {
+            Player player = new Player(entry.getValue(), entry.getKey());
+
+            rankMap.replace(rank, player);
+            rank -= 1;
+        }
+    }
+
     public void display() {
         System.out.println("BLACKJACK BETS HIGHSCORE BOARD");
         System.out.println("==============================");
-        Collection<String> topPlayers = scoreMap.values();
-        for (String player: topPlayers) {
-            System.out.println(player);
+        System.out.println("Rank     Score     Name");
+
+        // display is printing from the playerMap
+        for(Map.Entry<Integer, Player> entry : rankMap.entrySet()){
+
+            int rank = entry.getKey();
+            double score = entry.getValue().getScore();
+            String name = entry.getValue().getName();
+
+            System.out.println(rank + "        " + score + "    " + name);
         }
-        System.out.println();
+
+        // TODO: at the end of display, rewrite the csv file to start up next time
+
+
+        // OLD SCOREBOARD, JUST SCORE, PLAYER
+//        Collection<String> topPlayers = scoreMap.values();
+//        for (String player: topPlayers) {
+//            System.out.println(player);
+//        }
+//        System.out.println();
     }
 }

@@ -24,8 +24,8 @@ public class BlackJackApp {
         greeting();
 
         String name = promptName();
-        char difficulty = promptDifficulty();
-        player = new Player(name, difficulty);
+//        char difficulty = promptDifficulty();
+        player = new Player(name);
 
 
         while (!isBlackJackOver) {
@@ -74,7 +74,7 @@ public class BlackJackApp {
 
             determineWinner(name);
 
-           // board.update(player);
+            board.update(player);
 
 
             System.out.println("Type 'Y' to play another hand.");
@@ -86,7 +86,7 @@ public class BlackJackApp {
             } else {
 
                 isGameOver =false;
-                resetGame(name, difficulty);
+                resetGame(name);
             }
 
 
@@ -95,6 +95,7 @@ public class BlackJackApp {
         goodbyeMessage();
 
     }
+
 
     private void printResults() {
         System.out.println();
@@ -105,8 +106,9 @@ public class BlackJackApp {
         System.out.println();
     }
 
-    private void resetGame(String name, char difficulty) {
-        player = new Player(name, difficulty);
+
+    private void resetGame(String name) {
+        player = new Player(name);
         dealer = new Dealer();
     }
 
@@ -163,6 +165,7 @@ public class BlackJackApp {
         return scanner.nextLine();
     }
 
+    /*
     private char promptDifficulty() {
         boolean validInput = false;
         char difficulty = 'E';
@@ -179,6 +182,8 @@ public class BlackJackApp {
         }
         return difficulty;
     }
+
+     */
 
 
     private void updateScore(String winnerCase) {
