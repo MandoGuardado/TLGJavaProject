@@ -8,7 +8,6 @@ public class Player {
     private double score = 200;     // all players created with 200
     private char difficulty;
     private Hand hand = new Hand(); // aced difficulty for now
-
     private List<String> currentHand;
 
     // CTORS
@@ -31,17 +30,13 @@ public class Player {
     public void stand() {
     }
 
-    public void bet(double betAmount) {
-        score -= betAmount;
+    public void bet() {
     }
 
     public void printPlayerCards(){
         getHand().getCardImages().printHand();
     }
 
-    public void addWinnings(double winnings){
-        score += winnings;
-    }
     // GETTERS/SETTERS
     // x
 

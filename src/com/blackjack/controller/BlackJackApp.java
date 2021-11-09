@@ -34,20 +34,20 @@ public class BlackJackApp {
 
             for (int i = 0; i < 2; i++) {
                 String playerRandomKey = randomCardKey();
-                player.getHand().getCards().put(playerRandomKey, deck.getDeckMap().get(playerRandomKey));
+                player.hit(playerRandomKey, deck.getDeckMap().get(playerRandomKey));
 
                 String dealerRandKey = randomCardKey();
-                dealer.getHand().getCards().put(dealerRandKey, deck.getDeckMap().get(dealerRandKey));
+                dealer.getCard(dealerRandKey, deck.getDeckMap().get(dealerRandKey));
             }
-            player.getHand().updateInfo();
-            dealer.getHand().updateInfo();
+
 
 
             while (!isGameOver) {
                 Integer players_score = player.getHand().calculateScore();
                 Integer dealers_score = dealer.getHand().calculateScore();
-
+                player.printPlayerCards();
                 System.out.println(name +" Cards: " + player.getHand().getArrayValues() + ", Current Score: " + players_score);
+                dealer.printDealerCards();
                 System.out.println("Dealer Cards: " + dealer.getHand().getArrayValues() + ", Current Score: " + dealers_score);
                 if (players_score == 0 || dealers_score == 0 || players_score > 21) {
                     isGameOver = true;
@@ -56,12 +56,12 @@ public class BlackJackApp {
                     String response = scanner.nextLine().toUpperCase();
                     if ("Y".equals(response)) {
                         String randomCardKey = randomCardKey();
-                        player.getHand().getCards().put(randomCardKey, deck.getDeckMap().get(randomCardKey));
-                        player.getHand().updateInfo();
+                        player.hit(randomCardKey, deck.getDeckMap().get(randomCardKey));
                     } else {
                         isGameOver = true;
                     }
                 }
+
 
 //            placeBet();
 //            playBlackJack();
@@ -70,11 +70,12 @@ public class BlackJackApp {
             }
             while (dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17) {
                 String randomCardKey = randomCardKey();
-                dealer.getHand().getCards().put(randomCardKey, deck.getDeckMap().get(randomCardKey));
-                dealer.getHand().updateInfo();
+                dealer.getCard(randomCardKey, deck.getDeckMap().get(randomCardKey));
             }
             System.out.println();
+            player.printPlayerCards();
             System.out.println(name + " final hand: " + player.getHand().getArrayValues() + ", final score: " + player.getHand().getHandScore());
+            dealer.printDealerCards();
             System.out.println("Dealers final hand: " + dealer.getHand().getArrayValues() + ", final score: " + dealer.getHand().getHandScore());
 
 
