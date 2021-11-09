@@ -24,6 +24,13 @@ public class Dealer {
 
     }
 
+    public void getCard(String key, Card card){
+        this.getHand().getCards().put(key, card);
+        getHand().updateInfo();
+        getHand().getCardImages().createHand(card.getSymbol(),card.getSuit());
+
+    }
+
 
     private void initialDeal() {
 
@@ -32,6 +39,10 @@ public class Dealer {
     private void dealCard() {
 
     }
+    public void printDealerCards(){
+        getHand().getCardImages().printHand();
+    }
+
 
     //Accessor methods ( Setter and getters)
 
