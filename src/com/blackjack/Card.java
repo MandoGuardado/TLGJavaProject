@@ -12,7 +12,7 @@ public enum Card {
     SEVEN_CLUBS("Seven of Clover", 7, "7", "clubs"),
     SIX_CLUBS("Six of Clover", 6, "6", "clubs"),
     TEN_CLUBS("Ten of Clover", 10, "10", "clubs"),
-    THREE_CLUBS("Three of Clover", 3, "A", "clubs"),
+    THREE_CLUBS("Three of Clover", 3, "3", "clubs"),
     TWO_CLUBS("Two of Clover", 2, "2", "clubs"),
 
 
