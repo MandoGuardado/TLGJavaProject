@@ -1,6 +1,7 @@
 package com.blackjack;
 
 import java.util.List;
+import java.util.Map;
 
 public class Player {
     // FIELDS
@@ -21,10 +22,25 @@ public class Player {
     // Player (name, chips)
 
     // BUSINESS
-    public void hit(String key, Card card) {
-        this.getHand().getCards().put(key,card);
+    public void hit(Deck deck) {
+        int randomCardIndex = randomCard();
+        String cardKey = deck.getCardKeyReferences().get(randomCardIndex);
+        while (this.getHand().getCards().containsKey(cardKey)){
+            randomCardIndex = randomCard();
+            cardKey = deck.getCardKeyReferences().get(randomCardIndex);
+        }
+        Card currentCard = deck.getDeckMap().get(cardKey);
+
+        this.getHand().getCards().put(cardKey,currentCard);
+
         getHand().updateInfo();
-        getHand().getCardImages().createHand(card.getSymbol(), card.getSuit());
+        getHand().getCardImages().createHand(currentCard.getSymbol(), currentCard.getSuit());
+    }
+
+    private int randomCard() {
+       int min = 0;
+       int max = 51;
+       return (int) Math.floor(Math.random() * (max - min + 1) + min);
     }
 
     public void stand() {
