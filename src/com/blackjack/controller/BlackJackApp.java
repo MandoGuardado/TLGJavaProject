@@ -86,7 +86,7 @@ public class BlackJackApp {
             System.out.println();
             determineWinner(name);
 
-           // board.update(player);
+            board.update(player);
 
             System.out.println("Type 'Y' to play another hand.");
             String endOfGame = scanner.nextLine().toUpperCase();

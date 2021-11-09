@@ -14,6 +14,11 @@ public class Player {
         setName(name);
     }
 
+    public Player(String name, double score){
+        this(name);
+        setScore(score);
+    }
+
     // BUSINESS
     public void hit(String key, Card card) {
         this.getHand().getCards().put(key,card);
@@ -53,6 +58,10 @@ public class Player {
 
     public double getScore() {
         return score;
+    }
+
+    private void setScore(double score) {
+        this.score = score;
     }
 
     public Hand getHand() {
