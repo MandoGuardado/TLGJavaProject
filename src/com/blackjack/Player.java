@@ -30,12 +30,19 @@ public class Player {
     public void stand() {
     }
 
-    public void bet() {
+    public void bet(double betAmount) {
+        score -= betAmount;
+    }
+
+
+    public void addWinnings(double winnings){
+        score += winnings;
     }
 
     public void printPlayerCards(){
         getHand().getCardImages().printHand();
     }
+
 
     // GETTERS/SETTERS
     // x
