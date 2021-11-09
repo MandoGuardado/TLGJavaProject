@@ -15,7 +15,7 @@ public class BlackJackApp {
     private Deck deck = new Deck();
     private RandomIntGenerator intGenerator = new RandomIntGenerator();
 
-
+    private double pot = 0;     // pot for betting calculations
     private boolean isGameOver = false;
     private boolean isBlackJackOver = false;
 
@@ -29,6 +29,7 @@ public class BlackJackApp {
 
 
         while (!isBlackJackOver) {
+            placeBet();
 
 //        dealer.initiatesShuffleCards();
 
@@ -49,7 +50,7 @@ public class BlackJackApp {
                 System.out.println(name +" Cards: " + player.getHand().getArrayValues() + ", Current Score: " + players_score);
                 dealer.printDealerCards();
                 System.out.println("Dealer Cards: " + dealer.getHand().getArrayValues() + ", Current Score: " + dealers_score);
-                if (players_score == 0 || dealers_score == 0 || players_score > 21) {
+                if (players_score == 0 || dealers_score == 0 || players_score==21 || dealers_score==21 || players_score > 21) {
                     isGameOver = true;
                 } else {
                     System.out.println("Type Y to 'Hit' or N to  'Stand' ");
@@ -63,7 +64,10 @@ public class BlackJackApp {
                 }
 
 
+
+
 //            placeBet();
+
 //            playBlackJack();
 //            updateScore();
 //            prompUserToContinuePlaying();
@@ -88,6 +92,7 @@ public class BlackJackApp {
             String endOfGame = scanner.nextLine().toUpperCase();
 
             if (!("Y".equals(endOfGame))) {
+                System.out.println("Final Score: " + player.getScore());
                 isBlackJackOver = true;
             } else {
 
@@ -111,26 +116,34 @@ public class BlackJackApp {
     private void determineWinner(String name) {
         int playersFinalScore = player.getHand().getHandScore();
         int dealersFinalScore = dealer.getHand().getHandScore();
+        String winnerCase;     // to determine win cases in updateScore()
 
         if (playersFinalScore > 21 && dealersFinalScore > 21) {
             System.out.println("Dealer Wins! " + name +" went over 21.");
         }
         if (playersFinalScore == dealersFinalScore) {
-            System.out.println("Its a draw");
-        } else if (dealersFinalScore == 0) {
-            System.out.println( name + " looses! Dealer had BlackJack ");
-        } else if (playersFinalScore == 0) {
-            System.out.println(name + " wins! " + name +"has BlackJack.");
+            System.out.println("Its a draw! Bet returned to player ");
+            winnerCase = "draw";
+        } else if (dealersFinalScore == 0 || dealersFinalScore == 21) {             // added 21 value for BlackJack
+            System.out.println(name + " looses! Dealer got a BlackJack ");
+            winnerCase = "lose";
+        } else if (playersFinalScore == 0 || playersFinalScore == 21) {
+            System.out.println(name + " wins! " + name +" got a BlackJack!");
+            winnerCase = "blackjack";
         } else if (playersFinalScore > 21) {
-            System.out.println("Dealer wins! " + name +" went over.");
+            System.out.println("Dealer wins! " + name +" went over 21.");
+            winnerCase = "lose";
         } else if (dealersFinalScore > 21) {
-            System.out.println( name +" wins! Dealer went over.");
+            System.out.println( name +" wins! Dealer went over 21.");
+            winnerCase = "win";
         } else if (playersFinalScore > dealersFinalScore) {
             System.out.println(name + " wins! ");
+            winnerCase = "win";
         } else {
             System.out.println("Dealer wins!");
+            winnerCase = "lose";
         }
-
+        updateScore(winnerCase);
     }
 
     private String randomCardKey() {
@@ -141,7 +154,7 @@ public class BlackJackApp {
         String title = "";
 
         try {
-            title = Files.readString(Path.of("welcome_banner.txt"));
+            title = Files.readString(Path.of("images/welcome_banner.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -149,9 +162,6 @@ public class BlackJackApp {
         System.out.println(title);
     }
 
-    // prompt user for Name
-    // if name exists, return name and last chip value
-    // if name does not exist, make new player
     private String promptName() {
         System.out.println("Please enter your name: ");
 
@@ -163,7 +173,7 @@ public class BlackJackApp {
         char difficulty = 'E';
 
         while (!validInput) {
-            System.out.println("Please select your difficulty level: Easy-E, Medium-M, Hard-H\n");
+            System.out.println("Please select your difficulty level: Easy-E\n");
             String input = scanner.nextLine().toUpperCase();
 
             if (input.equals("E")) {    // or M, or H here?
@@ -176,8 +186,25 @@ public class BlackJackApp {
     }
 
 
-    private void updateScore() {
-        System.out.println("John Doe you score is:1000 points ");
+    private void updateScore(String winnerCase) {
+        switch (winnerCase) {
+            case "lose":
+                // player loses, bet taken by dealer
+                // nothing happens **handled by initial bet() by Player
+                break;
+            case "win":
+                // player wins, win bet amount; ex: bet 20, add 20*2 to score
+                player.addWinnings(pot * 2);
+                break;
+            case "blackjack":
+                // player blackJack, win bet amount x 1.5;  ex: bet 20, add 20*2.5
+                player.addWinnings(pot * 2.5);
+                break;
+            case "draw":
+                // draw (or push), player retains bet; ex: bet 20, add 20
+                player.addWinnings(pot);
+                break;
+        }
     }
 
     private void playBlackJack() {
@@ -186,7 +213,18 @@ public class BlackJackApp {
 
 
     private void placeBet() {
-        System.out.println("Please place your bet.");
+        boolean validBet = false;
+
+        while (!validBet) {
+            System.out.println("Please place your bet (minimum of 5): ");
+            String input = scanner.nextLine();
+            double bet = Double.parseDouble(input); // is there an exception problem here if input isn't double?
+            if (bet <= player.getScore() && bet >= 5) {
+                player.bet(bet);
+                pot += bet;
+                validBet = true;
+            }
+        }
     }
 
 
@@ -196,7 +234,15 @@ public class BlackJackApp {
 
 
     private void goodbyeMessage() {
+        String goodbye = "";
 
+        try {
+            goodbye = Files.readString(Path.of("images/goodbye_banner.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(goodbye);
 
     }
 
