@@ -6,19 +6,13 @@ public class Player {
     // FIELDS
     private String name;
     private double score = 200;     // all players created with 200
-    private char difficulty;
     private Hand hand = new Hand(); // aced difficulty for now
-    private List<String> currentHand;
 
     // CTORS
 
-    public Player(String name, char difficulty) {
+    public Player(String name) {
         setName(name);
-        setDifficulty(difficulty);
-
     }
-
-    // Player (name, chips)
 
     // BUSINESS
     public void hit(String key, Card card) {
@@ -61,10 +55,6 @@ public class Player {
         return score;
     }
 
-    public List<String> getCurrentHand() {
-        return currentHand;
-    }
-
     public Hand getHand() {
         return hand;
     }
@@ -73,19 +63,10 @@ public class Player {
         this.hand = hand;
     }
 
-    public char getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(char difficulty) {
-        this.difficulty = difficulty;
-    }
-
     @Override
     public String toString() {
         return getClass().getSimpleName() +
                 " name='" + getName() +
-                ", score=" + getScore() +
-                ", difficulty=" + getDifficulty();
+                ", score=" + getScore();
     }
 }
