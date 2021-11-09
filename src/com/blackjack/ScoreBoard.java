@@ -16,6 +16,7 @@ package com.blackjack;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class ScoreBoard implements Serializable {
@@ -110,7 +111,9 @@ public class ScoreBoard implements Serializable {
             double score = entry.getValue().getScore();
             String name = entry.getValue().getName();
 
-            System.out.println(rank + "        " + score + "    " + name);
+            DecimalFormat format = new DecimalFormat("0.#");
+
+            System.out.println(rank + "        " + format.format(score) + "       " + name);
         }
 
         // TODO: at the end of display, rewrite the csv file to start up next time
