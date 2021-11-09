@@ -168,7 +168,7 @@ public class BlackJackApp {
         char difficulty = 'E';
 
         while (!validInput) {
-            System.out.println("Please select your difficulty level: Easy-E, Medium-M, Hard-H\n");
+            System.out.println("Please select your difficulty level: Easy-E\n");
             String input = scanner.nextLine().toUpperCase();
 
             if (input.equals("E")) {    // or M, or H here?
@@ -229,7 +229,15 @@ public class BlackJackApp {
 
 
     private void goodbyeMessage() {
+        String goodbye = "";
 
+        try {
+            goodbye = Files.readString(Path.of("images/goodbye_banner.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(goodbye);
 
     }
 
