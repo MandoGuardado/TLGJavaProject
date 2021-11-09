@@ -34,11 +34,8 @@ public class BlackJackApp {
 //        dealer.initiatesShuffleCards();
 
             for (int i = 0; i < 2; i++) {
-                String playerRandomKey = randomCardKey();
-                player.hit(playerRandomKey, deck.getDeckMap().get(playerRandomKey));
-
-                String dealerRandKey = randomCardKey();
-                dealer.getCard(dealerRandKey, deck.getDeckMap().get(dealerRandKey));
+                player.hit(deck);
+                dealer.getCard(deck);
             }
 
 
@@ -46,23 +43,20 @@ public class BlackJackApp {
             while (!isGameOver) {
                 Integer players_score = player.getHand().calculateScore();
                 Integer dealers_score = dealer.getHand().calculateScore();
-                player.printPlayerCards();
-                System.out.println(name +" Cards: " + player.getHand().getArrayValues() + ", Current Score: " + players_score);
-                dealer.printDealerCards();
-                System.out.println("Dealer Cards: " + dealer.getHand().getArrayValues() + ", Current Score: " + dealers_score);
+
+                printResults();
+
                 if (players_score == 0 || dealers_score == 0 || players_score==21 || dealers_score==21 || players_score > 21) {
                     isGameOver = true;
                 } else {
                     System.out.println("Type Y to 'Hit' or N to  'Stand' ");
                     String response = scanner.nextLine().toUpperCase();
                     if ("Y".equals(response)) {
-                        String randomCardKey = randomCardKey();
-                        player.hit(randomCardKey, deck.getDeckMap().get(randomCardKey));
+                        player.hit(deck);
                     } else {
                         isGameOver = true;
                     }
                 }
-
 
 
 
@@ -73,20 +67,15 @@ public class BlackJackApp {
 //            prompUserToContinuePlaying();
             }
             while (dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17) {
-                String randomCardKey = randomCardKey();
-                dealer.getCard(randomCardKey, deck.getDeckMap().get(randomCardKey));
+                dealer.getCard(deck);
             }
-            System.out.println();
-            player.printPlayerCards();
-            System.out.println(name + " final hand: " + player.getHand().getArrayValues() + ", final score: " + player.getHand().getHandScore());
-            dealer.printDealerCards();
-            System.out.println("Dealers final hand: " + dealer.getHand().getArrayValues() + ", final score: " + dealer.getHand().getHandScore());
 
+            printResults();
 
-            System.out.println();
             determineWinner(name);
 
            // board.update(player);
+
 
             System.out.println("Type 'Y' to play another hand.");
             String endOfGame = scanner.nextLine().toUpperCase();
@@ -105,6 +94,15 @@ public class BlackJackApp {
         board.display();
         goodbyeMessage();
 
+    }
+
+    private void printResults() {
+        System.out.println();
+        player.printPlayerCards();
+        System.out.println(player.getName() + " " + (isGameOver() ? "final" : "" )+ " hand: " + player.getHand().getArrayValues() + ", " + (isGameOver() ? "final" : "" ) +" score: " + player.getHand().getHandScore());
+        dealer.printDealerCards();
+        System.out.println("Dealers" + (isGameOver() ? " final" : "" ) + " hand: " + dealer.getHand().getArrayValues() + ", " + (isGameOver() ? "final" : "" ) +" score: " + dealer.getHand().getHandScore());
+        System.out.println();
     }
 
     private void resetGame(String name, char difficulty) {
@@ -146,9 +144,6 @@ public class BlackJackApp {
         updateScore(winnerCase);
     }
 
-    private String randomCardKey() {
-        return deck.getCardKeyReferences().get(intGenerator.randomIndex());
-    }
 
     private void greeting() {
         String title = "";
@@ -255,4 +250,11 @@ public class BlackJackApp {
         isGameOver = gameOver;
     }
 
+    public boolean isBlackJackOver() {
+        return isBlackJackOver;
+    }
+
+    public void setBlackJackOver(boolean blackJackOver) {
+        isBlackJackOver = blackJackOver;
+    }
 }
