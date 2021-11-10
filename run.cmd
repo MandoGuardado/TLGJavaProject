@@ -1,3 +1,3 @@
 @echo off
 
-java -classpath out\production\TLGJavaProject com.blackjack.client.Main
+java -classpath BlackJackBets-1.0.jar com.blackjack.client.Main
