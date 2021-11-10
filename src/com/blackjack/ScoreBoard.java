@@ -4,12 +4,12 @@ package com.blackjack;
  * ScoreBoard of all players
  *
  * Map<Rank, Player> scoreMap;
- *  Rank        Player      Score
- *  ----        ----        Score       Difficulty
+ *  Rank        Score       Name
+ *  ----        ----        ----Score       Difficulty
  *  1           "Name", score: (finalChipValue), difficulty
  *  2           String, double, String
  *
- * Map<Integer, String>
+ * Map<Integer, Player>
  *
  */
 
@@ -54,17 +54,8 @@ public class ScoreBoard implements Serializable {
             playerMap.put(player.getPurse(), player.getName());
             playerMap.remove(playerMap.firstKey());
         }
-//
-//        for (Map.Entry<Double, String> entry : playerMap.entrySet()) {
-//            if (player.getPurse() >= entry.getKey()) {
-//                playerMap.put(player.getPurse(), player.getName());
-//                playerMap.remove(playerMap.firstKey());
-//                break;
-//                }
-//            }
 
         updateRankMap();
-
     }
 
     private Map<Integer, Player> loadMaps() {
@@ -119,8 +110,9 @@ public class ScoreBoard implements Serializable {
         System.out.println("BLACKJACK BETS HIGHSCORE BOARD");
         System.out.println("==============================");
         System.out.println("Rank     Score     Name");
+        System.out.println("----     -----     ----");
 
-        // display is printing from the playerMap
+        // printing from the playerMap
         for(Map.Entry<Integer, Player> entry : rankMap.entrySet()){
 
             int rank = entry.getKey();
@@ -132,10 +124,7 @@ public class ScoreBoard implements Serializable {
             System.out.println(rank + "        " + format.format(score) + "       " + name);
         }
 
-        // TODO: at the end of display, rewrite the csv file to start up next time
         save();
-
-
     }
 
     public Set<String> getRankedNames(){
