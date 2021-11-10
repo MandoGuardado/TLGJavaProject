@@ -58,13 +58,10 @@ public class BlackJackApp {
                     }
                 }
 
-
-
-//            placeBet();
-
 //            playBlackJack();
 //            updateScore();
 //            prompUserToContinuePlaying();
+
             }
             while (dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17) {
                 dealer.getCard(deck);

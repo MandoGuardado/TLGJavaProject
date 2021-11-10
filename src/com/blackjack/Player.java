@@ -1,9 +1,10 @@
 package com.blackjack;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class Player {
+public class Player implements Serializable {
     // FIELDS
     private String name;
     private double score = 200;     // all players created with 200

@@ -2,16 +2,16 @@ package com.blackjack;
 
 public enum Card {
     ACE_CLUBS("Ace of Clubs", 11 , "A", "clubs"),
-    KING_CLUBS("King of Clubs", 10, "K", "clubs"),
-    QUEEN_CLUBS("Queen of Clubs", 10, "Q", "clubs"),
-    JACK_CLUBS("Jack of Clubs", 10, "J", "clubs"),
-    TEN_CLUBS("Ten of Clubs", 10, "10", "clubs"),
-    NINE_CLUBS("Nine of Clubs", 9, "9", "clubs"),
     EIGHT_CLUBS("Eight of Clubs", 8, "8", "clubs"),
-    SEVEN_CLUBS("Seven of Clubs", 7, "7", "clubs"),
-    SIX_CLUBS("Six of Clubs", 6, "6", "clubs"),
     FIVE_CLUBS("Five of Clubs", 5, "5", "clubs"),
     FOUR_CLUBS("Four of Clubs", 4, "4", "clubs"),
+    JACK_CLUBS("Jack of Clubs", 10, "J", "clubs"),
+    KING_CLUBS("King of Clubs", 10, "K", "clubs"),
+    NINE_CLUBS("Nine of Clubs", 9, "9", "clubs"),
+    QUEEN_CLUBS("Queen of Clubs", 10, "Q", "clubs"),
+    SEVEN_CLUBS("Seven of Clubs", 7, "7", "clubs"),
+    SIX_CLUBS("Six of Clubs", 6, "6", "clubs"),
+    TEN_CLUBS("Ten of Clubs", 10, "10", "clubs"),
     THREE_CLUBS("Three of Clubs", 3, "3", "clubs"),
     TWO_CLUBS("Two of Clubs", 2, "2", "clubs"),
 
