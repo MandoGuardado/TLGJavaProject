@@ -21,7 +21,7 @@ import java.util.*;
 
 public class ScoreBoard implements Serializable {
 
-    private static final String dataFilePath = "data/scoreBoard.dat";
+    private static final String dataFilePath = "resources/scoreBoard.dat";
 
     public static ScoreBoard getInstance() {
         ScoreBoard board = null;
@@ -64,7 +64,7 @@ public class ScoreBoard implements Serializable {
         Map<Integer, Player> map = new TreeMap<>();
 
         try {
-            List<String> lines = Files.readAllLines(Path.of("data/simple-scoreboard.csv"));
+            List<String> lines = Files.readAllLines(Path.of("resources/starter-scoreboard.csv"));
             for (String line: lines){
                 String[] tokens = line.split(",");
                 int rank = Integer.parseInt(tokens[0]);

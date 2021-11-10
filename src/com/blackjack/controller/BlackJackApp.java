@@ -150,7 +150,7 @@ public class BlackJackApp {
         String title = "";
 
         try {
-            title = Files.readString(Path.of("images/welcome_banner.txt"));
+            title = Files.readString(Path.of("resources/welcome_banner.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -232,7 +232,7 @@ public class BlackJackApp {
         String goodbye = "";
 
         try {
-            goodbye = Files.readString(Path.of("images/goodbye_banner.txt"));
+            goodbye = Files.readString(Path.of("resources/goodbye_banner.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
