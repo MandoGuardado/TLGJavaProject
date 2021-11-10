@@ -69,17 +69,18 @@ public class BlackJackApp {
 
             printResults();
             determineWinner(name);
-            board.update(player);
+
 
             System.out.println("Type 'Y' to play another hand.");
             String endOfGame = scanner.nextLine().toUpperCase();
 
             if (!("Y".equals(endOfGame))) {
-                System.out.println("Final Score: " + player.getScore());
+                System.out.println("Final Score: " + player.getPurse());
+                board.update(player);
                 isBlackJackOver = true;
             } else {
                 isGameOver =false;
-                resetGame(name);
+                resetGame(name, player.getPurse());
             }
 
         }
@@ -104,8 +105,8 @@ public class BlackJackApp {
     }
 
 
-    private void resetGame(String name) {
-        player = new Player(name);
+    private void resetGame(String name, Double score) {
+        player = new Player(name, score);
         dealer = new Dealer();
     }
 
@@ -117,8 +118,9 @@ public class BlackJackApp {
 
         if (playersFinalScore > 21 && dealersFinalScore > 21) {
             System.out.println("Dealer Wins! " + name +" went over 21.");
+            winnerCase = "lose";
         }
-        if (playersFinalScore == dealersFinalScore) {
+        else if (playersFinalScore == dealersFinalScore) {
             System.out.println("Its a draw! Bet returned to player ");
             winnerCase = "draw";
         } else if (dealersFinalScore == 0 || dealersFinalScore == 21) {             // added 21 value for BlackJack
@@ -168,6 +170,9 @@ public class BlackJackApp {
             if (!rankedNames.contains(name)){
                 validName = true;
             }
+            else {
+                System.out.println("Oops, that name is already taken. Pick another name please");
+            }
         }
 
         return name;
@@ -202,10 +207,15 @@ public class BlackJackApp {
         boolean validBet = false;
 
         while (!validBet) {
-            System.out.println("Please place your bet (minimum of 5): ");
+            if (player.getPurse() < 25) {
+                System.out.println("Uh oh! Looks like you might need a loan, here's another 100 to get you going ;)");
+                player.addWinnings(100);
+            }
+
+            System.out.println("Current total: " + player.getPurse() + "  Please place your bet: ");
             String input = scanner.nextLine();
             double bet = Double.parseDouble(input); // is there an exception problem here if input isn't double?
-            if (bet <= player.getScore() && bet >= 5) {
+            if (bet < player.getPurse()) {
                 player.bet(bet);
                 pot += bet;
                 validBet = true;
