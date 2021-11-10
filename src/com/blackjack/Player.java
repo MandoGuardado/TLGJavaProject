@@ -30,12 +30,12 @@ public class Player {
     }
 
     public void bet(double betAmount) {
-        score -= betAmount;
+        setScore(getScore() - betAmount);
     }
 
 
     public void addWinnings(double winnings){
-        score += winnings;
+        setScore(getScore() + winnings);
     }
 
     public void printPlayerCards(){
