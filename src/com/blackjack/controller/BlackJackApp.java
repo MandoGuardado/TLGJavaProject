@@ -208,7 +208,7 @@ public class BlackJackApp {
             System.out.println("Current total: " + player.getPurse() + "  Please place your bet: ");
             String input = scanner.nextLine();
             double bet = Double.parseDouble(input); // is there an exception problem here if input isn't double?
-            if (bet < player.getPurse()) {
+            if (bet <= player.getPurse()) {
                 player.bet(bet);
                 pot += bet;
                 validBet = true;
