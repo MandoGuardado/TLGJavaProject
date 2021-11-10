@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Player implements Serializable {
-    // FIELDS
+    //Fields
     private String name;
     private double purse = 200;     // all players created with 200
     private Hand hand = new Hand(); // aced difficulty for now
 
-    // CTORS
+    //Constructors
 
     public Player(String name) {
         setName(name);
@@ -20,7 +20,7 @@ public class Player implements Serializable {
         setPurse(purse);
     }
 
-    // BUSINESS
+    // Business Methods
     public void hit(Deck deck) {
         int randomCardIndex = randomCard();
         String cardKey = deck.getCardKeyReferences().get(randomCardIndex);
@@ -34,6 +34,10 @@ public class Player implements Serializable {
 
         getHand().updateInfo();
         getHand().getCardImages().createHand(currentCard.getSymbol(), currentCard.getSuit());
+    }
+
+    public List<StringBuilder> printPlayerCards(){
+        return getHand().getCardImages().getCardImage();
     }
 
     private int randomCard() {
@@ -55,12 +59,8 @@ public class Player implements Serializable {
         setPurse(getPurse() + winnings);
     }
 
-    public List<StringBuilder> printPlayerCards(){
-        return getHand().getCardImages().getCardImage();
-    }
 
-
-    // GETTERS/SETTERS
+    //Accessor Methods
     public String getName() {
         return name;
     }

@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Hand implements Serializable {
-
+    //Fields
     private Map<String, Card> cards = new HashMap<>();
     private List<Integer> arrayValues;
     private HandImage cardImages = new HandImage();
     private Integer handScore;
 
 
-    //Business methods 
-
+    //Business methods
     public void updateInfo() {
         List<Integer> result = new ArrayList<>();
         Integer sum = 0;
@@ -49,7 +48,6 @@ public class Hand implements Serializable {
 
 
     //Accessor Methods
-
     public Map<String, Card> getCards() {
         return cards;
     }

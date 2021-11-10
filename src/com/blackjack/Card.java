@@ -1,7 +1,7 @@
 package com.blackjack;
 
 public enum Card {
-    ACE_CLUBS("Ace of Clubs", 11 , "A", "clubs"),
+    ACE_CLUBS("Ace of Clubs", 11, "A", "clubs"),
     EIGHT_CLUBS("Eight of Clubs", 8, "8", "clubs"),
     FIVE_CLUBS("Five of Clubs", 5, "5", "clubs"),
     FOUR_CLUBS("Four of Clubs", 4, "4", "clubs"),
@@ -17,18 +17,18 @@ public enum Card {
 
 
     ACE_SPADES("Ace of Spades", 11, "A", "spades"),
-    EIGHT_SPADES("Eight of Spades", 8,"8", "spades"),
-    FIVE_SPADES("Five of Spades", 5,"5", "spades"),
-    FOUR_SPADES("Four of Spades", 4,"4", "spades"),
-    JACK_SPADES("Jack of Spades", 10,"J", "spades"),
-    KING_SPADES("King of Spades", 10,"K", "spades"),
-    NINE_SPADES("Nine of Spades", 9,"9", "spades"),
-    QUEEN_SPADES("Queen of Spades", 10,"Q", "spades"),
-    SEVEN_SPADES("Seven of Spades", 7,"7", "spades"),
-    SIX_SPADES("Six of Spades", 6,"6", "spades"),
-    TEN_SPADES("Ten of Spades", 10,"10", "spades"),
-    THREE_SPADES("Three of Spades", 3,"3", "spades"),
-    TWO_SPADES("Two of Spades", 2,"2", "spades"),
+    EIGHT_SPADES("Eight of Spades", 8, "8", "spades"),
+    FIVE_SPADES("Five of Spades", 5, "5", "spades"),
+    FOUR_SPADES("Four of Spades", 4, "4", "spades"),
+    JACK_SPADES("Jack of Spades", 10, "J", "spades"),
+    KING_SPADES("King of Spades", 10, "K", "spades"),
+    NINE_SPADES("Nine of Spades", 9, "9", "spades"),
+    QUEEN_SPADES("Queen of Spades", 10, "Q", "spades"),
+    SEVEN_SPADES("Seven of Spades", 7, "7", "spades"),
+    SIX_SPADES("Six of Spades", 6, "6", "spades"),
+    TEN_SPADES("Ten of Spades", 10, "10", "spades"),
+    THREE_SPADES("Three of Spades", 3, "3", "spades"),
+    TWO_SPADES("Two of Spades", 2, "2", "spades"),
 
     ACE_HEARTS("Ace of Hearts", 11, "A", "hearts"),
     EIGHT_HEARTS("Eight of Hearts", 8, "8", "hearts"),
@@ -58,19 +58,21 @@ public enum Card {
     THREE_DIAMONDS("Three of Diamonds", 3, "3", "diamonds"),
     TWO_DIAMONDS("Two of Diamonds", 2, "2", "diamonds");
 
+    //Fields: Private fields
     private final String name;
     private final int value;
     private final String symbol;
     private final String suit;
 
-
-    Card(String name,int value, String symbol, String suit) {
+    //Constructor: used to set the values of the ENUM
+    Card(String name, int value, String symbol, String suit) {
         this.value = value;
         this.name = name;
         this.symbol = symbol;
         this.suit = suit;
     }
 
+    //Accessor methods -- Methods to access ENUM values.
     public int getValue() {
         return value;
     }

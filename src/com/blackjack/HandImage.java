@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 public class HandImage implements Serializable {
-    String cardSymbol;
-    List<StringBuilder> cardImage = new ArrayList<>();
-    Map<String, String[]> suitTemplates = new HashMap<>();
+    //Fields
+    private String cardSymbol;
+    private List<StringBuilder> cardImage = new ArrayList<>();
+    private Map<String, String[]> suitTemplates = new HashMap<>();
 
-
+    //Constructors
     public HandImage() {
         cardImage.add(new StringBuilder());
         cardImage.add(new StringBuilder());
@@ -22,7 +23,7 @@ public class HandImage implements Serializable {
         initializeSuitTemplates();
     }
 
-
+    //Business Methods
     public void createHand(String symbol, String suit) {
         String[] template = getSuitTemplates().get(suit);
         setCardSymbol(symbol);
@@ -33,8 +34,6 @@ public class HandImage implements Serializable {
                 template[i] = "| '--'" + getCardSymbol() + "|\t" + "";
             }
             cardImage.get(i).append(template[i]);
-
-
         }
 
     }
@@ -85,20 +84,21 @@ public class HandImage implements Serializable {
 
     }
 
-    public List<StringBuilder> getCardImage() {
-        return cardImage;
-    }
-
-    public void setCardImage(List<StringBuilder> cardImage) {
-        this.cardImage = cardImage;
-    }
-
+    //Accessor Methods
     public String getCardSymbol() {
         return cardSymbol;
     }
 
     public void setCardSymbol(String cardSymbol) {
         this.cardSymbol = cardSymbol;
+    }
+
+    public List<StringBuilder> getCardImage() {
+        return cardImage;
+    }
+
+    public void setCardImage(List<StringBuilder> cardImage) {
+        this.cardImage = cardImage;
     }
 
     public Map<String, String[]> getSuitTemplates() {

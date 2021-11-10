@@ -1,30 +1,20 @@
 package com.blackjack;
 
-import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Map;
+
 
 public class Dealer {
+    //Fields
     private Deck deck = new Deck();
-    private Hand hand = new Hand(); // or Hand. Dealer
+    private Hand hand = new Hand();
 
+    //Constructors
     public Dealer() {
 
     }
 
-    public void initiatesShuffleCards() {
-        ShuffleCards message = null;
-        try {
-            message = new ShuffleCards();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert message != null;
-        message.start();
-
-    }
-
+    //Business Methods
     public void getCard(Deck deck) {
         int randomCardIndex = randomCard();
         String cardKey = deck.getCardKeyReferences().get(randomCardIndex);
@@ -49,22 +39,12 @@ public class Dealer {
     }
 
 
-    private void initialDeal() {
-
-    }
-
-    private void dealCard() {
-
-    }
-
     public List<StringBuilder> printDealerCards() {
         return getHand().getCardImages().getCardImage();
     }
 
 
     //Accessor methods ( Setter and getters)
-
-
     public Deck getDeck() {
         return deck;
     }

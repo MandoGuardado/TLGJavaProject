@@ -4,16 +4,17 @@ import java.util.*;
 
 
 public class Deck {
+    //Fields
     private final Map<String, Card> deckMap = new HashMap<>();
     private final List<String> cardKeyReferences = new ArrayList<>();
 
-
+    //Constructors
     public Deck() {
         setUpDeckMap();
         setUpReferenceArrayList();
     }
 
-
+    //Business Methods
     private void setUpDeckMap() {
         deckMap.put(Card.ACE_CLUBS.getName(), Card.ACE_CLUBS);
         deckMap.put(Card.TWO_CLUBS.getName(), Card.TWO_CLUBS);
@@ -86,10 +87,5 @@ public class Deck {
     public List<String> getCardKeyReferences() {
         return cardKeyReferences;
     }
-
-    public String getKey(int index) {
-        return cardKeyReferences.get(index);
-    }
-
 
 }
