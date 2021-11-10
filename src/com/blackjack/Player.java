@@ -2,12 +2,11 @@ package com.blackjack;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 public class Player implements Serializable {
     // FIELDS
     private String name;
-    private double score = 200;     // all players created with 200
+    private double purse = 200;     // all players created with 200
     private Hand hand = new Hand(); // aced difficulty for now
 
     // CTORS
@@ -16,9 +15,9 @@ public class Player implements Serializable {
         setName(name);
     }
 
-    public Player(String name, double score){
+    public Player(String name, double purse){
         this(name);
-        setScore(score);
+        setPurse(purse);
     }
 
     // BUSINESS
@@ -48,13 +47,12 @@ public class Player implements Serializable {
     }
 
     public void bet(double betAmount) {
-        //
-        setScore(getScore() - betAmount);
+        setPurse(getPurse() - betAmount);
     }
 
 
     public void addWinnings(double winnings){
-        setScore(getScore() + winnings);
+        setPurse(getPurse() + winnings);
     }
 
     public List<StringBuilder> printPlayerCards(){
@@ -63,9 +61,6 @@ public class Player implements Serializable {
 
 
     // GETTERS/SETTERS
-    // x
-
-
     public String getName() {
         return name;
     }
@@ -75,12 +70,12 @@ public class Player implements Serializable {
     }
 
 
-    public double getScore() {
-        return score;
+    public double getPurse() {
+        return purse;
     }
 
-    private void setScore(double score) {
-        this.score = score;
+    private void setPurse(double purse) {
+        this.purse = purse;
     }
 
     public Hand getHand() {
@@ -95,6 +90,6 @@ public class Player implements Serializable {
     public String toString() {
         return getClass().getSimpleName() +
                 " name='" + getName() +
-                ", score=" + getScore();
+                ", score=" + getPurse();
     }
 }

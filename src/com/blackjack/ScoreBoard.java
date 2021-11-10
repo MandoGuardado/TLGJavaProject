@@ -50,13 +50,18 @@ public class ScoreBoard implements Serializable {
 
     public void update(Player player) {
 
-        for (Map.Entry<Double, String> entry : playerMap.entrySet()) {
-            if (player.getScore() >= entry.getKey()) {
-                playerMap.put(player.getScore(), player.getName());
-                playerMap.remove(playerMap.firstKey());
-                break;
-                }
-            }
+        if (player.getPurse() > playerMap.firstKey()) {
+            playerMap.put(player.getPurse(), player.getName());
+            playerMap.remove(playerMap.firstKey());
+        }
+//
+//        for (Map.Entry<Double, String> entry : playerMap.entrySet()) {
+//            if (player.getPurse() >= entry.getKey()) {
+//                playerMap.put(player.getPurse(), player.getName());
+//                playerMap.remove(playerMap.firstKey());
+//                break;
+//                }
+//            }
 
         updateRankMap();
 
@@ -119,7 +124,7 @@ public class ScoreBoard implements Serializable {
         for(Map.Entry<Integer, Player> entry : rankMap.entrySet()){
 
             int rank = entry.getKey();
-            double score = entry.getValue().getScore();
+            double score = entry.getValue().getPurse();
             String name = entry.getValue().getName();
 
             DecimalFormat format = new DecimalFormat("0.#");
