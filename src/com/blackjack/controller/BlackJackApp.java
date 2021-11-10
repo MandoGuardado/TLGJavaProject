@@ -16,7 +16,6 @@ public class BlackJackApp {
     private Player player;
     private Dealer dealer = new Dealer();
     private Deck deck = new Deck();
-    private RandomIntGenerator intGenerator = new RandomIntGenerator();
 
     private double pot = 0;     // pot for betting calculations
     private boolean isGameOver = false;
@@ -29,10 +28,8 @@ public class BlackJackApp {
         String name = promptName();
         player = new Player(name);
 
-        while (!isBlackJackOver) {
+        while (!isBlackJackOver()) {
             placeBet();
-
-//        dealer.initiatesShuffleCards();
 
             for (int i = 0; i < 2; i++) {
                 player.hit(deck);
@@ -46,21 +43,18 @@ public class BlackJackApp {
                 printResults();
 
                 if (players_score == 0 || dealers_score == 0 || players_score==21 || dealers_score==21 || players_score > 21) {
-                    isGameOver = true;
+                    setGameOver(true);
+//                    isGameOver = true;
                 } else {
                     System.out.println("Type Y to 'Hit' or N to  'Stand' ");
                     String response = scanner.nextLine().toUpperCase();
                     if ("Y".equals(response)) {
                         player.hit(deck);
                     } else {
-                        isGameOver = true;
+                        setGameOver(true);
+//                        isGameOver = true;
                     }
                 }
-
-//            placeBet();
-//            playBlackJack();
-//            updateScore();
-//            prompUserToContinuePlaying();
 
             }
             while (dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17) {
@@ -70,16 +64,18 @@ public class BlackJackApp {
             printResults();
             determineWinner(name);
 
-
+            prompUserToContinuePlaying();
             System.out.println("Type 'Y' to play another hand.");
             String endOfGame = scanner.nextLine().toUpperCase();
 
             if (!("Y".equals(endOfGame))) {
                 System.out.println("Final Score: " + player.getPurse());
                 board.update(player);
-                isBlackJackOver = true;
+                setBlackJackOver(true);
+//                isBlackJackOver = true;
             } else {
-                isGameOver =false;
+                setGameOver(false);
+//                isGameOver =false;
                 resetGame(name, player.getPurse());
             }
 
@@ -199,9 +195,6 @@ public class BlackJackApp {
         }
     }
 
-    private void playBlackJack() {
-        System.out.println("Playing Blackjack ");
-    }
 
     private void placeBet() {
         boolean validBet = false;
