@@ -12,6 +12,7 @@ public class Dealer {
     public Dealer() {
 
     }
+
     public void initiatesShuffleCards() {
         ShuffleCards message = null;
         try {
@@ -24,10 +25,10 @@ public class Dealer {
 
     }
 
-    public void getCard( Deck deck){
+    public void getCard(Deck deck) {
         int randomCardIndex = randomCard();
         String cardKey = deck.getCardKeyReferences().get(randomCardIndex);
-        while (this.getHand().getCards().containsKey(cardKey)){
+        while (this.getHand().getCards().containsKey(cardKey)) {
             randomCardIndex = randomCard();
             cardKey = deck.getCardKeyReferences().get(randomCardIndex);
         }
@@ -37,9 +38,10 @@ public class Dealer {
         this.getHand().getCards().put(cardKey, currentCard);
 
         getHand().updateInfo();
-        getHand().getCardImages().createHand(currentCard.getSymbol(),currentCard.getSuit());
+        getHand().getCardImages().createHand(currentCard.getSymbol(), currentCard.getSuit());
 
     }
+
     private int randomCard() {
         int min = 0;
         int max = 51;
@@ -54,8 +56,9 @@ public class Dealer {
     private void dealCard() {
 
     }
-    public void printDealerCards(){
-        getHand().getCardImages().printHand();
+
+    public List<StringBuilder> printDealerCards() {
+        return getHand().getCardImages().getCardImage();
     }
 
 

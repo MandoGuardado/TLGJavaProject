@@ -8,18 +8,18 @@ import java.util.Map;
 
 public class Hand implements Serializable {
 
-    private Map<String,Card> cards = new HashMap<>();
+    private Map<String, Card> cards = new HashMap<>();
     private List<Integer> arrayValues;
     private HandImage cardImages = new HandImage();
     private Integer handScore;
-    
-    
+
+
     //Business methods 
-    
-    public void updateInfo(){
+
+    public void updateInfo() {
         List<Integer> result = new ArrayList<>();
         Integer sum = 0;
-        for (Map.Entry<String, Card> entry: getCards().entrySet()) {
+        for (Map.Entry<String, Card> entry : getCards().entrySet()) {
             Card card = entry.getValue();
             result.add(card.getValue());
 
@@ -30,13 +30,13 @@ public class Hand implements Serializable {
 
     }
 
-    public Integer calculateScore(){
+    public Integer calculateScore() {
         int result = getHandScore();
 
-        if(getHandScore() == 21 && getArrayValues().size() == 2){
+        if (getHandScore() == 21 && getArrayValues().size() == 2) {
             result = 0;
         }
-        if(getArrayValues().contains(11) && getHandScore() > 21){
+        if (getArrayValues().contains(11) && getHandScore() > 21) {
             int returnIndex = getArrayValues().indexOf(11);
             getArrayValues().set(returnIndex, 1);
             result = getHandScore();
@@ -46,12 +46,8 @@ public class Hand implements Serializable {
 
         return result;
     }
-    
-    
-    
-    
-    
-    
+
+
     //Accessor Methods
 
     public Map<String, Card> getCards() {
@@ -85,5 +81,5 @@ public class Hand implements Serializable {
     public void setHandScore(Integer handScore) {
         this.handScore = handScore;
     }
-    
+
 }

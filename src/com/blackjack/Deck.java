@@ -4,15 +4,14 @@ import java.util.*;
 
 
 public class Deck {
-
     private final Map<String, Card> deckMap = new HashMap<>();
     private final List<String> cardKeyReferences = new ArrayList<>();
+
 
     public Deck() {
         setUpDeckMap();
         setUpReferenceArrayList();
     }
-
 
 
     private void setUpDeckMap() {
@@ -74,13 +73,12 @@ public class Deck {
     }
 
     private void setUpReferenceArrayList() {
-        for (Map.Entry<String,Card> entry: getDeckMap().entrySet() ) {
+        for (Map.Entry<String, Card> entry : getDeckMap().entrySet()) {
             getCardKeyReferences().add(entry.getKey());
         }
     }
 
     //Accessor Methods
-
     public Map<String, Card> getDeckMap() {
         return deckMap;
     }
@@ -89,7 +87,7 @@ public class Deck {
         return cardKeyReferences;
     }
 
-    public String getKey(int index){
+    public String getKey(int index) {
         return cardKeyReferences.get(index);
     }
 

@@ -55,8 +55,8 @@ public class Player implements Serializable {
         setScore(getScore() + winnings);
     }
 
-    public void printPlayerCards(){
-        getHand().getCardImages().printHand();
+    public List<StringBuilder> printPlayerCards(){
+        return getHand().getCardImages().getCardImage();
     }
 
 

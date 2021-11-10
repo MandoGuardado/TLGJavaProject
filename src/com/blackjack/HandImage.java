@@ -9,7 +9,7 @@ import java.util.Map;
 public class HandImage implements Serializable {
     String cardSymbol;
     List<StringBuilder> cardImage = new ArrayList<>();
-    Map<String, String[]> tempaltes = new HashMap<>();
+    Map<String, String[]> suitTemplates = new HashMap<>();
 
 
     public HandImage() {
@@ -23,20 +23,8 @@ public class HandImage implements Serializable {
     }
 
 
-
-//    String[] template = new String[]{
-//            ".------.\t" + "",
-//            "|" + getCardSymbol() + ".--. |\t" + "",
-//            "| (\\/) |\t" + "",
-//            "| :\\/: |\t" + "",
-//            "| '--'" + getCardSymbol() + "|\t" + "",
-//            "`------'\t" + ""
-//
-//    };
-
-
     public void createHand(String symbol, String suit) {
-        String[] template = getTempaltes().get(suit);
+        String[] template = getSuitTemplates().get(suit);
         setCardSymbol(symbol);
         for (int i = 0; i < cardImage.size(); i++) {
             if (i == 1) {
@@ -51,12 +39,6 @@ public class HandImage implements Serializable {
 
     }
 
-    public void printHand() {
-        for (StringBuilder row : cardImage) {
-            System.out.println(row);
-
-        }
-    }
 
     private void initializeSuitTemplates() {
         String[] heartsTemplate = new String[]{
@@ -96,11 +78,19 @@ public class HandImage implements Serializable {
                 "| '--'" + getCardSymbol() + "|\t" + "",
                 "`------'\t" + ""
         };
-        getTempaltes().put("hearts", heartsTemplate);
-        getTempaltes().put("clubs", clubsTemplate);
-        getTempaltes().put("spades", spadesTemplate);
-        getTempaltes().put("diamonds", diamondsTemplate);
+        getSuitTemplates().put("hearts", heartsTemplate);
+        getSuitTemplates().put("clubs", clubsTemplate);
+        getSuitTemplates().put("spades", spadesTemplate);
+        getSuitTemplates().put("diamonds", diamondsTemplate);
 
+    }
+
+    public List<StringBuilder> getCardImage() {
+        return cardImage;
+    }
+
+    public void setCardImage(List<StringBuilder> cardImage) {
+        this.cardImage = cardImage;
     }
 
     public String getCardSymbol() {
@@ -111,11 +101,11 @@ public class HandImage implements Serializable {
         this.cardSymbol = cardSymbol;
     }
 
-    public Map<String, String[]> getTempaltes() {
-        return tempaltes;
+    public Map<String, String[]> getSuitTemplates() {
+        return suitTemplates;
     }
 
-    public void setTempaltes(Map<String, String[]> tempaltes) {
-        this.tempaltes = tempaltes;
+    public void setSuitTemplates(Map<String, String[]> suitTemplates) {
+        this.suitTemplates = suitTemplates;
     }
 }
