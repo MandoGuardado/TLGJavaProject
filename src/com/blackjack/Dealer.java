@@ -24,11 +24,26 @@ public class Dealer {
 
     }
 
-    public void getCard(String key, Card card){
-        this.getHand().getCards().put(key, card);
-        getHand().updateInfo();
-        getHand().getCardImages().createHand(card.getSymbol(),card.getSuit());
+    public void getCard( Deck deck){
+        int randomCardIndex = randomCard();
+        String cardKey = deck.getCardKeyReferences().get(randomCardIndex);
+        while (this.getHand().getCards().containsKey(cardKey)){
+            randomCardIndex = randomCard();
+            cardKey = deck.getCardKeyReferences().get(randomCardIndex);
+        }
+        Card currentCard = deck.getDeckMap().get(cardKey);
 
+
+        this.getHand().getCards().put(cardKey, currentCard);
+
+        getHand().updateInfo();
+        getHand().getCardImages().createHand(currentCard.getSymbol(),currentCard.getSuit());
+
+    }
+    private int randomCard() {
+        int min = 0;
+        int max = 51;
+        return (int) Math.floor(Math.random() * (max - min + 1) + min);
     }
 
 
