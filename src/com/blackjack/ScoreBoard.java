@@ -132,4 +132,9 @@ public class ScoreBoard implements Serializable {
 
 
     }
+
+    public Set<String> getRankedNames(){
+        return new HashSet<>(playerMap.values());
+    }
+
 }
