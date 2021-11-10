@@ -54,8 +54,8 @@ public class Player {
         score += winnings;
     }
 
-    public void printPlayerCards(){
-        getHand().getCardImages().printHand();
+    public List<StringBuilder> printPlayerCards(){
+        return getHand().getCardImages().getCardImage();
     }
 
 
