@@ -1,11 +1,16 @@
 package com.blackjack.controller;
 
+
+import com.apps.util.Console;
 import com.blackjack.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.List;
+import java.util.Scanner;
+
+import static com.apps.util.Console.*;
 
 public class BlackJackApp {
     private Scanner scanner = new Scanner(System.in);
@@ -26,7 +31,6 @@ public class BlackJackApp {
         String name = promptName();
 //        char difficulty = promptDifficulty();
         player = new Player(name);
-
 
         while (!isBlackJackOver) {
             placeBet();
@@ -57,6 +61,7 @@ public class BlackJackApp {
                         isGameOver = true;
                     }
                 }
+
 
 
 
@@ -99,11 +104,17 @@ public class BlackJackApp {
 
     private void printResults() {
         System.out.println();
-        player.printPlayerCards();
+        printStringBuilder(player.printPlayerCards());
         System.out.println(player.getName() + " " + (isGameOver() ? "final" : "" )+ " hand: " + player.getHand().getArrayValues() + ", " + (isGameOver() ? "final" : "" ) +" score: " + player.getHand().getHandScore());
-        dealer.printDealerCards();
+        printStringBuilder(dealer.printDealerCards());
         System.out.println("Dealers" + (isGameOver() ? " final" : "" ) + " hand: " + dealer.getHand().getArrayValues() + ", " + (isGameOver() ? "final" : "" ) +" score: " + dealer.getHand().getHandScore());
         System.out.println();
+    }
+
+    private void printStringBuilder(List<StringBuilder> cards) {
+        for (StringBuilder row:cards) {
+            System.out.println(row);
+        }
     }
 
 
