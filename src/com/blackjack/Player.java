@@ -44,9 +44,11 @@ public class Player implements Serializable {
     }
 
     public void stand() {
+        // Do we want to remove this?
     }
 
     public void bet(double betAmount) {
+        //
         setScore(getScore() - betAmount);
     }
 

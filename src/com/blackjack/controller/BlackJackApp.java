@@ -1,7 +1,6 @@
 package com.blackjack.controller;
 
 
-import com.apps.util.Console;
 import com.blackjack.*;
 
 import java.io.IOException;
@@ -9,8 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
-
-import static com.apps.util.Console.*;
+import java.util.Set;
 
 public class BlackJackApp {
     private Scanner scanner = new Scanner(System.in);
@@ -29,7 +27,6 @@ public class BlackJackApp {
         greeting();
 
         String name = promptName();
-//        char difficulty = promptDifficulty();
         player = new Player(name);
 
         while (!isBlackJackOver) {
@@ -41,8 +38,6 @@ public class BlackJackApp {
                 player.hit(deck);
                 dealer.getCard(deck);
             }
-
-
 
             while (!isGameOver) {
                 Integer players_score = player.getHand().calculateScore();
@@ -62,13 +57,7 @@ public class BlackJackApp {
                     }
                 }
 
-
-
-
-
 //            placeBet();
-
-
 //            playBlackJack();
 //            updateScore();
 //            prompUserToContinuePlaying();
@@ -79,11 +68,8 @@ public class BlackJackApp {
             }
 
             printResults();
-
             determineWinner(name);
-
             board.update(player);
-
 
             System.out.println("Type 'Y' to play another hand.");
             String endOfGame = scanner.nextLine().toUpperCase();
@@ -92,18 +78,15 @@ public class BlackJackApp {
                 System.out.println("Final Score: " + player.getScore());
                 isBlackJackOver = true;
             } else {
-
                 isGameOver =false;
                 resetGame(name);
             }
-
 
         }
         board.display();
         goodbyeMessage();
 
     }
-
 
     private void printResults() {
         System.out.println();
@@ -190,27 +173,6 @@ public class BlackJackApp {
         return name;
     }
 
-    /*
-    private char promptDifficulty() {
-        boolean validInput = false;
-        char difficulty = 'E';
-
-        while (!validInput) {
-            System.out.println("Please select your difficulty level: Easy-E\n");
-            String input = scanner.nextLine().toUpperCase();
-
-            if (input.equals("E")) {    // or M, or H here?
-//                difficulty = 'E';                                   // setdiff here?, does this app have the player?
-                System.out.println("EASY difficulty selected");
-                validInput = true;
-            }
-        }
-        return difficulty;
-    }
-
-     */
-
-
     private void updateScore(String winnerCase) {
         switch (winnerCase) {
             case "lose":
@@ -236,7 +198,6 @@ public class BlackJackApp {
         System.out.println("Playing Blackjack ");
     }
 
-
     private void placeBet() {
         boolean validBet = false;
 
@@ -251,7 +212,6 @@ public class BlackJackApp {
             }
         }
     }
-
 
     private void prompUserToContinuePlaying() {
         System.out.println("Would you like to play another hand? ");
@@ -268,7 +228,6 @@ public class BlackJackApp {
         }
 
         System.out.println(goodbye);
-
     }
 
     // Accessor Methods - Setter and Getters
