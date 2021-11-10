@@ -1,11 +1,12 @@
 package com.blackjack;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HandImage {
+public class HandImage implements Serializable {
     String cardSymbol;
     List<StringBuilder> cardImage = new ArrayList<>();
     Map<String, String[]> suitTemplates = new HashMap<>();

@@ -1,9 +1,10 @@
 package com.blackjack;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class Player {
+public class Player implements Serializable {
     // FIELDS
     private String name;
     private double score = 200;     // all players created with 200
@@ -46,12 +47,12 @@ public class Player {
     }
 
     public void bet(double betAmount) {
-        score -= betAmount;
+        setScore(getScore() - betAmount);
     }
 
 
     public void addWinnings(double winnings){
-        score += winnings;
+        setScore(getScore() + winnings);
     }
 
     public List<StringBuilder> printPlayerCards(){

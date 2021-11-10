@@ -16,6 +16,7 @@ package com.blackjack;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class ScoreBoard implements Serializable {
@@ -50,18 +51,20 @@ public class ScoreBoard implements Serializable {
     public void update(Player player) {
 
         for (Map.Entry<Double, String> entry : playerMap.entrySet()) {
-            if (player.getScore() > entry.getKey()) {
+            if (player.getScore() >= entry.getKey()) {
                 playerMap.put(player.getScore(), player.getName());
                 playerMap.remove(playerMap.firstKey());
                 break;
                 }
             }
-            // TODO: same score case
 
         updateRankMap();
+
     }
 
     private Map<Integer, Player> loadMaps() {
+        // TODO if dat file doesn't exist, read OG from csv
+
         Map<Integer, Player> map = new TreeMap<>();
 
         try {
@@ -98,6 +101,15 @@ public class ScoreBoard implements Serializable {
         }
     }
 
+    private void save() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataFilePath))){
+            out.writeObject(this);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void display() {
         System.out.println("BLACKJACK BETS HIGHSCORE BOARD");
         System.out.println("==============================");
@@ -110,17 +122,19 @@ public class ScoreBoard implements Serializable {
             double score = entry.getValue().getScore();
             String name = entry.getValue().getName();
 
-            System.out.println(rank + "        " + score + "    " + name);
+            DecimalFormat format = new DecimalFormat("0.#");
+
+            System.out.println(rank + "        " + format.format(score) + "       " + name);
         }
 
         // TODO: at the end of display, rewrite the csv file to start up next time
+        save();
 
 
-        // OLD SCOREBOARD, JUST SCORE, PLAYER
-//        Collection<String> topPlayers = scoreMap.values();
-//        for (String player: topPlayers) {
-//            System.out.println(player);
-//        }
-//        System.out.println();
     }
+
+    public Set<String> getRankedNames(){
+        return new HashSet<>(playerMap.values());
+    }
+
 }

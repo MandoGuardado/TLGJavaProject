@@ -65,11 +65,14 @@ public class BlackJackApp {
 
 
 
+
 //            placeBet();
+
 
 //            playBlackJack();
 //            updateScore();
 //            prompUserToContinuePlaying();
+
             }
             while (dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17) {
                 dealer.getCard(deck);
@@ -171,9 +174,20 @@ public class BlackJackApp {
     }
 
     private String promptName() {
-        System.out.println("Please enter your name: ");
+        String name = "noname";
+        Set<String> rankedNames = board.getRankedNames();
 
-        return scanner.nextLine();
+        boolean validName = false;
+        while (!validName) {
+            System.out.println("Please enter your name: ");
+            name = scanner.nextLine();
+
+            if (!rankedNames.contains(name)){
+                validName = true;
+            }
+        }
+
+        return name;
     }
 
     /*
