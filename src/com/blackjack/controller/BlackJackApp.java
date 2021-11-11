@@ -23,10 +23,12 @@ public class BlackJackApp {
     private boolean isHandBlackjack = false;                                //Boolean to determine if There is a blackjack
     private boolean isBlackJackOver = false;                                //Boolean to determine if game is over.
 
+    //Constructor --Made private to prevent from 'new' keywords to be used in client
     private BlackJackApp() {
     }
 
     //Business Methods
+    //Method to create a new instance of Blackjack object.
     public static BlackJackApp getInstance(){
         return new BlackJackApp();
     }
