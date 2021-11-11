@@ -1,6 +1,7 @@
 package com.blackjack.controller;
 
 
+import com.apps.util.Console;
 import com.blackjack.*;
 
 import java.io.IOException;
@@ -11,137 +12,54 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class BlackJackApp {
-    private Scanner scanner = new Scanner(System.in);
-    private ScoreBoard board = ScoreBoard.getInstance();
-    private Player player;
-    private Dealer dealer = new Dealer();
-    private Deck deck = new Deck();
+    //Fields
+    private Scanner scanner = new Scanner(System.in);                       // Used to prompt user
+    private ScoreBoard board = ScoreBoard.getInstance();                    // BlackJack Scoreboard, keeps players historical data
+    private Player player;                                                  //Player Instance
+    private Dealer dealer = new Dealer();                                   //Dealer Instance
+    private Deck deck = new Deck();                                         // Deck Instance
 
-    private double pot = 0;     // pot for betting calculations
-    private boolean isGameOver = false;
-    private boolean isBlackJackOver = false;
+    private double pot = 0;     // pot for betting calculations             //Current Pot
+    private boolean isHandBlackjack = false;                                //Boolean to determine if There is a blackjack
+    private boolean isBlackJackOver = false;                                //Boolean to determine if game is over.
 
-
-    public void playGame() {
-        greeting();
-
-        String name = promptName();
-        player = new Player(name);
-
+    //Business Methods
+    public void playGame() {                                                //Method used to initiate game
+        greeting();                                                         //Initial greeting
+        String name = promptName();                                         //Prompts Player for name
+        player = new Player(name);                                          // New player is instantiated
         while (!isBlackJackOver()) {
-            placeBet();
-
-            for (int i = 0; i < 2; i++) {
+            placeBet();                                                     //Prompts user to place a bet
+            for (int i = 0; i < 2; i++) {                                   //Initiates the first two cards for player and dealer
                 player.hit(deck);
                 dealer.getCard(deck);
             }
-
-            while (!isGameOver) {
-                Integer players_score = player.getHand().calculateScore();
+            while (!isHandBlackjack) {                                      //While loop to determine if Player or Dealer has "BlackJack" on initial two cards,
+                Integer players_score = player.getHand().calculateScore();  //If either Player or Dealer have BlackJack, then Score will be checked to determine winner.
                 Integer dealers_score = dealer.getHand().calculateScore();
 
-                printResults();
+                printCurrentStatus();
 
-                if (players_score == 0 || dealers_score == 0 || players_score==21 || dealers_score==21 || players_score > 21) {
-                    setGameOver(true);
-//                    isGameOver = true;
+                if (players_score == 0 || dealers_score == 0 || players_score == 21 || dealers_score == 21 || players_score > 21) {
+                    setHandBlackjack(true);                                 //If true, player will be given the option to Hit
                 } else {
-                    System.out.println("Type Y to 'Hit' or N to  'Stand' ");
-                    String response = scanner.nextLine().toUpperCase();
-                    if ("Y".equals(response)) {
-                        player.hit(deck);
-                    } else {
-                        setGameOver(true);
-//                        isGameOver = true;
-                    }
+                    promptPlayerToHitOrStand();                             //If false, player will be prompted to either hit or stand
                 }
-
             }
-            while (dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17) {
+            while (isDealerDone()) {                                        // While loop that will allow dealer to continue to hit if they don't have BlackJack, or if under 17
                 dealer.getCard(deck);
             }
-
-            printResults();
-            determineWinner(name);
-
-            prompUserToContinuePlaying();
-            System.out.println("Type 'Y' to play another hand.");
-            String endOfGame = scanner.nextLine().toUpperCase();
-
-            if (!("Y".equals(endOfGame))) {
-                System.out.println("Final Score: " + player.getPurse());
-                board.update(player);
-                setBlackJackOver(true);
-//                isBlackJackOver = true;
-            } else {
-                setGameOver(false);
-//                isGameOver =false;
-                resetGame(name, player.getPurse());
-            }
-
-        }
-        board.display();
-        goodbyeMessage();
-
+            printCurrentStatus();                                           // Prints the current Hand of Player and Dealer, along with their total
+            determineWinner(name);                                          // Determines winner
+            prompUserToContinuePlayingBlackJack();                          //Prompts Player to see if they want to pay again.
+        }                                    // While loops that will control if BlackJack continues
+        board.display();                                                    // Displays game board
+        goodbyeMessage();                                                   //Goodbye message
     }
 
-    private void printResults() {
-        System.out.println();
-        printStringBuilder(player.printPlayerCards());
-        System.out.println(player.getName() + " " + (isGameOver() ? "final" : "" )+ " hand: " + player.getHand().getArrayValues() + ", " + (isGameOver() ? "final" : "" ) +" score: " + player.getHand().getHandScore());
-        printStringBuilder(dealer.printDealerCards());
-        System.out.println("Dealers" + (isGameOver() ? " final" : "" ) + " hand: " + dealer.getHand().getArrayValues() + ", " + (isGameOver() ? "final" : "" ) +" score: " + dealer.getHand().getHandScore());
-        System.out.println();
-    }
+    //Additional Business Methods (Helper Methods)
 
-    private void printStringBuilder(List<StringBuilder> cards) {
-        for (StringBuilder row:cards) {
-            System.out.println(row);
-        }
-    }
-
-
-    private void resetGame(String name, Double score) {
-        player = new Player(name, score);
-        dealer = new Dealer();
-    }
-
-
-    private void determineWinner(String name) {
-        int playersFinalScore = player.getHand().getHandScore();
-        int dealersFinalScore = dealer.getHand().getHandScore();
-        String winnerCase;     // to determine win cases in updateScore()
-
-        if (playersFinalScore > 21 && dealersFinalScore > 21) {
-            System.out.println("Dealer Wins! " + name +" went over 21.");
-            winnerCase = "lose";
-        }
-        else if (playersFinalScore == dealersFinalScore) {
-            System.out.println("Its a draw! Bet returned to player ");
-            winnerCase = "draw";
-        } else if (dealersFinalScore == 0 || dealersFinalScore == 21) {             // added 21 value for BlackJack
-            System.out.println(name + " looses! Dealer got a BlackJack ");
-            winnerCase = "lose";
-        } else if (playersFinalScore == 0 || playersFinalScore == 21) {
-            System.out.println(name + " wins! " + name +" got a BlackJack!");
-            winnerCase = "blackjack";
-        } else if (playersFinalScore > 21) {
-            System.out.println("Dealer wins! " + name +" went over 21.");
-            winnerCase = "lose";
-        } else if (dealersFinalScore > 21) {
-            System.out.println( name +" wins! Dealer went over 21.");
-            winnerCase = "win";
-        } else if (playersFinalScore > dealersFinalScore) {
-            System.out.println(name + " wins! ");
-            winnerCase = "win";
-        } else {
-            System.out.println("Dealer wins!");
-            winnerCase = "lose";
-        }
-        updateScore(winnerCase);
-    }
-
-
+    //Greeting helper method
     private void greeting() {
         String title = "";
 
@@ -154,6 +72,7 @@ public class BlackJackApp {
         System.out.println(title);
     }
 
+    //Prompting for name helper method
     private String promptName() {
         String name = "noname";
         Set<String> rankedNames = board.getRankedNames();
@@ -163,17 +82,149 @@ public class BlackJackApp {
             System.out.println("Please enter your name: ");
             name = scanner.nextLine();
 
-            if (!rankedNames.contains(name)){
+            if (!rankedNames.contains(name)) {
                 validName = true;
-            }
-            else {
+            } else {
                 System.out.println("Oops, that name is already taken. Pick another name please");
             }
         }
-
         return name;
     }
 
+    //Placing bets prompter helper method
+    private void placeBet() {
+        boolean validBet = false;
+
+        while (!validBet) {
+            if (player.getPurse() < 25) {
+                System.out.println("Uh oh! Looks like you might need a loan, here's another 100 to get you going ;)");
+                player.addWinnings(100);
+            }
+
+            System.out.println("Current total: " + player.getPurse() + "  Please place your bet: ");
+            String input = scanner.nextLine();
+            double bet = Double.parseDouble(input); // is there an exception problem here if input isn't double?
+            if (bet <= player.getPurse()) {
+                player.bet(bet);
+                pot += bet;
+                validBet = true;
+            }
+        }
+    }
+
+    // Printing Current Player and Dealer Hands, score and Card Images helper method along with StringBuilder printing helper method
+    private void printCurrentStatus() {
+        System.out.println();
+        printStringBuilder(player.printPlayerCards());
+        System.out.println(player.getName() + " " + (isHandBlackjack() ? "Final" : "") + " hand: " + player.getHand().getArrayValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + player.getHand().getHandScore());
+        System.out.println();
+        printStringBuilder(dealer.printDealerCards());
+        System.out.println("Dealers" + (isHandBlackjack() ? " Final" : "") + " hand: " + dealer.getHand().getArrayValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + dealer.getHand().getHandScore());
+        System.out.println();
+    }
+
+    private void printStringBuilder(List<StringBuilder> cards) {
+        for (StringBuilder row : cards) {
+            System.out.println(row);
+        }
+    }
+
+    //Prompting player to either Hit or Stand helper method
+    private void promptPlayerToHitOrStand() {
+        System.out.println("Type H to 'Hit' or S to  'Stand' ");
+        String response = scanner.nextLine().toUpperCase();
+        while (!("H".equals(response) || "S".equals(response))) {
+            System.out.println("Type H to 'Hit' or S to  'Stand' ");
+            response = scanner.nextLine().toUpperCase();
+        }
+        if ("H".equals(response)) {
+            player.hit(deck);
+            Console.clear();
+        } else {
+            setHandBlackjack(true);
+        }
+    }
+
+    //Method that helped determine winner based on current score
+    private void determineWinner(String name) {
+        int playersFinalScore = player.getHand().getHandScore();
+        int dealersFinalScore = dealer.getHand().getHandScore();
+        String winnerCase;     // to determine win cases in updateScore()
+
+        if (playersFinalScore > 21 && dealersFinalScore > 21) {
+            System.out.println("Dealer Wins! " + name + " went over 21.");
+            winnerCase = "lose";
+        } else if (playersFinalScore == dealersFinalScore) {
+            System.out.println("Its a draw! Bet returned to player ");
+            winnerCase = "draw";
+        } else if (dealersFinalScore == 0 || dealersFinalScore == 21) {             // added 21 value for BlackJack
+            System.out.println(name + " looses! Dealer got a BlackJack ");
+            winnerCase = "lose";
+        } else if (playersFinalScore == 0 || playersFinalScore == 21) {
+            System.out.println(name + " wins! " + name + " got a BlackJack!");
+            winnerCase = "blackjack";
+        } else if (playersFinalScore > 21) {
+            System.out.println("Dealer wins! " + name + " went over 21.");
+            winnerCase = "lose";
+        } else if (dealersFinalScore > 21) {
+            System.out.println(name + " wins! Dealer went over 21.");
+            winnerCase = "win";
+        } else if (playersFinalScore > dealersFinalScore) {
+            System.out.println(name + " wins! ");
+            winnerCase = "win";
+        } else {
+            System.out.println("Dealer wins!");
+            winnerCase = "lose";
+        }
+        updateScore(winnerCase);
+    }
+
+    //Method used to prompt user to determine if they want to continue playing or end game, also resetting game if player wanted to continue playing
+    private void prompUserToContinuePlayingBlackJack() {
+        System.out.println();
+        System.out.println("Would you like to play another hand? ");
+        System.out.println("Type 'Y' to play another hand or 'N' to end BlackJack.");
+        String endOfGame = scanner.nextLine().toUpperCase();
+
+        while (!("Y".equals(endOfGame) || "N".equals(endOfGame))) {
+            System.out.println("Type 'Y' to play another hand or 'N' to end BlackJack.");
+            endOfGame = scanner.nextLine().toUpperCase();
+        }
+
+        if ("Y".equals(endOfGame)) {
+            setHandBlackjack(false);
+            resetGame(player.getName(), player.getPurse());
+        } else {
+            System.out.println("Final Score: " + player.getPurse());
+            board.update(player);
+            setBlackJackOver(true);
+        }
+    }
+
+    private void resetGame(String name, Double score) {
+        player = new Player(name, score);
+        dealer = new Dealer();
+    }
+
+    //Method used to print out goodbye message
+    private void goodbyeMessage() {
+        String goodbye = "";
+
+        try {
+            goodbye = Files.readString(Path.of("resources/goodbye_banner.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(goodbye);
+    }
+
+    //Method used to determine if dealer is done taking additional card, if they have a BlackJack or their score is over 17
+    private Boolean isDealerDone() {
+        return dealer.getHand().getHandScore() != 0 && dealer.getHand().getHandScore() < 17;
+    }
+
+    // Method used to determine the Players winnings or looses
     private void updateScore(String winnerCase) {
         switch (winnerCase) {
             case "lose":
@@ -195,51 +246,13 @@ public class BlackJackApp {
         }
     }
 
-
-    private void placeBet() {
-        boolean validBet = false;
-
-        while (!validBet) {
-            if (player.getPurse() < 25) {
-                System.out.println("Uh oh! Looks like you might need a loan, here's another 100 to get you going ;)");
-                player.addWinnings(100);
-            }
-
-            System.out.println("Current total: " + player.getPurse() + "  Please place your bet: ");
-            String input = scanner.nextLine();
-            double bet = Double.parseDouble(input); // is there an exception problem here if input isn't double?
-            if (bet <= player.getPurse()) {
-                player.bet(bet);
-                pot += bet;
-                validBet = true;
-            }
-        }
-    }
-
-    private void prompUserToContinuePlaying() {
-        System.out.println("Would you like to play another hand? ");
-    }
-
-
-    private void goodbyeMessage() {
-        String goodbye = "";
-
-        try {
-            goodbye = Files.readString(Path.of("resources/goodbye_banner.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(goodbye);
-    }
-
     // Accessor Methods - Setter and Getters
-    public boolean isGameOver() {
-        return isGameOver;
+    public boolean isHandBlackjack() {
+        return isHandBlackjack;
     }
 
-    public void setGameOver(boolean gameOver) {
-        isGameOver = gameOver;
+    public void setHandBlackjack(boolean handBlackjack) {
+        isHandBlackjack = handBlackjack;
     }
 
     public boolean isBlackJackOver() {
