@@ -23,7 +23,14 @@ public class BlackJackApp {
     private boolean isHandBlackjack = false;                                //Boolean to determine if There is a blackjack
     private boolean isBlackJackOver = false;                                //Boolean to determine if game is over.
 
+    private BlackJackApp() {
+    }
+
     //Business Methods
+    public static BlackJackApp getInstance(){
+        return new BlackJackApp();
+    }
+
     public void playGame() {                                                //Method used to initiate game
         greeting();                                                         //Initial greeting
         String name = promptName();                                         //Prompts Player for name
