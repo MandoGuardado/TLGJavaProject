@@ -4,10 +4,11 @@ Console based imitation of Blackjack game.
 
 ## Description
 
-Blackjack Bets is console driven game that allows a single player to compete against the 
+Blackjack Bets is a console based game that allows a single player to compete against the 
 house(dealer) and bet on each hand. The objective is to get a hand total closer to 21 than
 the dealer without going over 21. Both dealer and player start with two cards each and the 
-player can bet at the beginning of each hand.
+player can bet at the beginning of each hand. Attaining a highscore will get your name added 
+to the HighScore Table.
 
 ## Getting Started
 
@@ -22,7 +23,7 @@ player can bet at the beginning of each hand.
 
 ### Executing program
 
-* First: Open a command line and navigate to root folder of the game.
+* First: Open a command line and navigate to the root folder of the game.
 * Using the command below, program will build and game will initiate.
 ```
 run
