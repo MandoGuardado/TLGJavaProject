@@ -65,15 +65,13 @@ public class ScoreBoardTest {
 
         testRanksMap = testBoard.getRankMap();
 
-        assertEquals(5, testRanksMap.size());assertEquals(testRanksMap.get(1).getName(), "Jay");
-        assertEquals(testRanksMap.get(2).getName(), "test");assertEquals(testRanksMap.get(3).getName(), "Armando");
+        assertEquals(5, testRanksMap.size());
+        assertEquals(testRanksMap.get(1).getName(), "Jay");
+        assertEquals(testRanksMap.get(2).getName(), "test");
+        assertEquals(testRanksMap.get(3).getName(), "Armando");
         assertEquals(testRanksMap.get(4).getName(), "Rian");
         assertEquals(testRanksMap.get(5).getName(), "Peach");
-        testBoard.display();
+        //testBoard.display();
     }
 
-    @Test
-    public void update_shouldChangePlayerData_whenPlayerScoreIsTheSame() {
-        Player testPlayer = new Player("test", 450);
-    }
 }
