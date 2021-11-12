@@ -1,6 +1,5 @@
 package com.blackjack.controller;
 
-
 import com.apps.util.Console;
 import com.blackjack.*;
 
@@ -83,7 +82,7 @@ public class BlackJackApp {
 
     //Prompting for name helper method
     private String promptName() {
-        String name = "noname";
+        String name = "";
         Set<String> rankedNames = board.getRankedNames();
 
         boolean validName = false;
@@ -94,7 +93,7 @@ public class BlackJackApp {
             if (!rankedNames.contains(name)) {
                 validName = true;
             } else {
-                System.out.println("Oops, that name is already taken. Pick another name please");
+                System.out.println("Oops, sorry friend, that name is already taken. Pick another name please");
             }
         }
         return name;
@@ -166,7 +165,7 @@ public class BlackJackApp {
         } else if (playersFinalScore == dealersFinalScore) {
             System.out.println("Its a draw! Bet returned to player ");
             winnerCase = "draw";
-        } else if (dealersFinalScore == 0 || dealersFinalScore == 21) {             // added 21 value for BlackJack
+        } else if (dealersFinalScore == 0 || dealersFinalScore == 21) {
             System.out.println(name + " looses! Dealer got a BlackJack ");
             winnerCase = "lose";
         } else if (playersFinalScore == 0 || playersFinalScore == 21) {
