@@ -7,10 +7,10 @@ public class Player implements Serializable {
     //Fields
     private String name;
     private double purse = 200;     // all players created with 200
-    private Hand hand = new Hand(); // aced difficulty for now
+    private Hand hand = new Hand();
 
     //Constructors
-    //Constructo used when game begins which has a default purse amount
+    //Constructor used when game begins which has a default purse amount
     public Player(String name) {
         setName(name);
     }
@@ -45,16 +45,13 @@ public class Player implements Serializable {
        return (int) Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-
     public void bet(double betAmount) {
         setPurse(getPurse() - betAmount);
     }
 
-
     public void addWinnings(double winnings){
         setPurse(getPurse() + winnings);
     }
-
 
     //Accessor Methods
     public String getName() {
@@ -77,7 +74,6 @@ public class Player implements Serializable {
     public Hand getHand() {
         return hand;
     }
-
 
     @Override
     public String toString() {
