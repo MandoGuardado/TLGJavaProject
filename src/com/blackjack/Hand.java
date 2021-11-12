@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class Hand implements Serializable {
     //Fields
-    private Map<String, Card> cards = new HashMap<>();
-    private List<Integer> arrayValues;
+    private Map<String, Card> handCards = new HashMap<>();
+    private List<Integer> cardValues;
     private HandImage cardImages = new HandImage();
     private Integer handScore;
 
@@ -18,26 +18,26 @@ public class Hand implements Serializable {
     public void updateInfo() {
         List<Integer> result = new ArrayList<>();
         Integer sum = 0;
-        for (Map.Entry<String, Card> entry : getCards().entrySet()) {
+        for (Map.Entry<String, Card> entry : getHandCards().entrySet()) {
             Card card = entry.getValue();
             result.add(card.getValue());
 
             sum += card.getValue();
         }
-        setArrayValues(result);
+        setCardValues(result);
         setHandScore(sum);
 
     }
-
+    //Method being used to determine if the hand contains a BlackJack
     public Integer calculateScore() {
         int result = getHandScore();
 
-        if (getHandScore() == 21 && getArrayValues().size() == 2) {
+        if (getHandScore() == 21 && getCardValues().size() == 2) {
             result = 0;
         }
-        if (getArrayValues().contains(11) && getHandScore() > 21) {
-            int returnIndex = getArrayValues().indexOf(11);
-            getArrayValues().set(returnIndex, 1);
+        if (getCardValues().contains(11) && getHandScore() > 21) {
+            int returnIndex = getCardValues().indexOf(11);
+            getCardValues().set(returnIndex, 1);
             result = getHandScore();
         }
 
@@ -48,20 +48,20 @@ public class Hand implements Serializable {
 
 
     //Accessor Methods
-    public Map<String, Card> getCards() {
-        return cards;
+    public Map<String, Card> getHandCards() {
+        return handCards;
     }
 
-    public void setCards(Map<String, Card> cards) {
-        this.cards = cards;
+    public void setHandCards(Map<String, Card> handCards) {
+        this.handCards = handCards;
     }
 
-    public List<Integer> getArrayValues() {
-        return arrayValues;
+    public List<Integer> getCardValues() {
+        return cardValues;
     }
 
-    public void setArrayValues(List<Integer> arrayValues) {
-        this.arrayValues = arrayValues;
+    public void setCardValues(List<Integer> cardValues) {
+        this.cardValues = cardValues;
     }
 
     public HandImage getCardImages() {

@@ -14,12 +14,12 @@ public class HandImage implements Serializable {
 
     //Constructors
     public HandImage() {                                            //On instantiation crates List with six rows of String Builders
-        cardImage.add(new StringBuilder());
-        cardImage.add(new StringBuilder());
-        cardImage.add(new StringBuilder());
-        cardImage.add(new StringBuilder());
-        cardImage.add(new StringBuilder());
-        cardImage.add(new StringBuilder());
+        getCardImage().add(new StringBuilder());
+        getCardImage().add(new StringBuilder());
+        getCardImage().add(new StringBuilder());
+        getCardImage().add(new StringBuilder());
+        getCardImage().add(new StringBuilder());
+        getCardImage().add(new StringBuilder());
         initializeSuitTemplates();
     }
 
@@ -102,15 +102,8 @@ public class HandImage implements Serializable {
         return cardImage;
     }
 
-    public void setCardImage(List<StringBuilder> cardImage) {
-        this.cardImage = cardImage;
-    }
-
     public Map<String, String[]> getSuitTemplates() {
         return suitTemplates;
     }
 
-    public void setSuitTemplates(Map<String, String[]> suitTemplates) {
-        this.suitTemplates = suitTemplates;
-    }
 }

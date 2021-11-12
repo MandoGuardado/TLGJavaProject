@@ -10,11 +10,13 @@ public class Deck {
 
     //Constructors
     public Deck() {
+        //constructor is being used to fill up map and reference array being used to utilize it index to randomly select card.
         setUpDeckMap();
         setUpReferenceArrayList();
     }
 
     //Business Methods
+    //Method used to automatically fill in the Map of all the ENUM cards
     private void setUpDeckMap() {
         deckMap.put(Card.ACE_CLUBS.getName(), Card.ACE_CLUBS);
         deckMap.put(Card.TWO_CLUBS.getName(), Card.TWO_CLUBS);
@@ -72,7 +74,7 @@ public class Deck {
         deckMap.put(Card.QUEEN_SPADES.getName(), Card.QUEEN_SPADES);
         deckMap.put(Card.KING_SPADES.getName(), Card.KING_SPADES);
     }
-
+    //Method being used to fill in list array with ENUM card key's
     private void setUpReferenceArrayList() {
         for (Map.Entry<String, Card> entry : getDeckMap().entrySet()) {
             getCardKeyReferences().add(entry.getKey());
