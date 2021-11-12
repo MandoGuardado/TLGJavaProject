@@ -122,12 +122,14 @@ public class BlackJackApp {
 
     // Printing Current Player and Dealer Hands, score and Card Images helper method along with StringBuilder printing helper method
     private void printCurrentStatus() {
+        int playerScore = player.getHand().getHandScore();
+        int dealerScore = dealer.getHand().getHandScore();
         System.out.println();
         printStringBuilder(player.printPlayerCards());
-        System.out.println(player.getName() + " " + (isHandBlackjack() ? "Final" : "") + " hand: " + player.getHand().getCardValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + player.getHand().getHandScore());
+        System.out.println(player.getName() + " " + (isHandBlackjack() ? "Final" : "") + " hand: " + player.getHand().getCardValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + (playerScore == 0?"21": playerScore));
         System.out.println();
         printStringBuilder(dealer.printDealerCards());
-        System.out.println("Dealers" + (isHandBlackjack() ? " Final" : "") + " hand: " + dealer.getHand().getCardValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + dealer.getHand().getHandScore());
+        System.out.println("Dealers" + (isHandBlackjack() ? " Final" : "") + " hand: " + dealer.getHand().getCardValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + (dealerScore == 0? "21" : dealerScore));
         System.out.println();
     }
 
