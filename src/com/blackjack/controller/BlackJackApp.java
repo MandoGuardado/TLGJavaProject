@@ -56,6 +56,7 @@ public class BlackJackApp {
             }
             while (isDealerDone()) {                                        // While loop that will allow dealer to continue to hit if they don't have BlackJack, or if under 17
                 dealer.getCard(deck);
+                dealer.getHand().calculateScore();
             }
             printCurrentStatus();                                           // Prints the current Hand of Player and Dealer, along with their total
             determineWinner(name);                                          // Determines winner

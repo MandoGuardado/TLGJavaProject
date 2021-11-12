@@ -89,7 +89,7 @@ public class HandTest {
         dealersHand.updateInfo();
 
         int result = dealerTwo.getHand().calculateScore();
-        assertEquals(22, result);
+        assertEquals(14, result);
     }
 
 

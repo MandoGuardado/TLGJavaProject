@@ -38,12 +38,21 @@ public class Hand implements Serializable {
         if (getCardValues().contains(11) && getHandScore() > 21) {
             int returnIndex = getCardValues().indexOf(11);
             getCardValues().set(returnIndex, 1);
+            updateCardValues();
             result = getHandScore();
         }
 
         setHandScore(result);
 
         return result;
+    }
+
+    private void updateCardValues() {
+        int result= 0;
+        for (Integer value:cardValues) {
+            result += value;
+        }
+        setHandScore(result);
     }
 
 
