@@ -1,6 +1,5 @@
 package com.blackjack.controller;
 
-
 import com.apps.util.Console;
 import com.blackjack.*;
 
@@ -83,7 +82,7 @@ public class BlackJackApp {
 
     //Prompting for name helper method
     private String promptName() {
-        String name = "noname";
+        String name = "";
         Set<String> rankedNames = board.getRankedNames();
 
         boolean validName = false;
@@ -94,7 +93,7 @@ public class BlackJackApp {
             if (!rankedNames.contains(name)) {
                 validName = true;
             } else {
-                System.out.println("Oops, that name is already taken. Pick another name please");
+                System.out.println("Oops, sorry friend, that name is already taken. Pick another name please");
             }
         }
         return name;
@@ -112,7 +111,7 @@ public class BlackJackApp {
 
             System.out.println("Current total: " + player.getPurse() + "  Please place your bet: ");
             String input = scanner.nextLine();
-            double bet = Double.parseDouble(input); // is there an exception problem here if input isn't double?
+            double bet = Double.parseDouble(input);
             if (bet <= player.getPurse()) {
                 player.bet(bet);
                 pot += bet;
@@ -166,7 +165,7 @@ public class BlackJackApp {
         } else if (playersFinalScore == dealersFinalScore) {
             System.out.println("Its a draw! Bet returned to player ");
             winnerCase = "draw";
-        } else if (dealersFinalScore == 0 || dealersFinalScore == 21) {             // added 21 value for BlackJack
+        } else if (dealersFinalScore == 0 || dealersFinalScore == 21) {
             System.out.println(name + " looses! Dealer got a BlackJack ");
             winnerCase = "lose";
         } else if (playersFinalScore == 0 || playersFinalScore == 21) {
@@ -239,19 +238,22 @@ public class BlackJackApp {
         switch (winnerCase) {
             case "lose":
                 // player loses, bet taken by dealer
-                // nothing happens **handled by initial bet() by Player
+                pot = 0;
                 break;
             case "win":
-                // player wins, win bet amount; ex: bet 20, add 20*2 to score
+                // player wins, win bet amount; ex: bet 20, add 20*2
                 player.addWinnings(pot * 2);
+                pot = 0;
                 break;
             case "blackjack":
-                // player blackJack, win bet amount x 1.5;  ex: bet 20, add 20*2.5
+                // player wins blackJack, win bet amount x 1.5;  ex: bet 20, add 20*2.5
                 player.addWinnings(pot * 2.5);
+                pot = 0;
                 break;
             case "draw":
                 // draw (or push), player retains bet; ex: bet 20, add 20
                 player.addWinnings(pot);
+                pot = 0;
                 break;
         }
     }

@@ -1,15 +1,12 @@
 package com.blackjack;
 
 /*
- * ScoreBoard of all players
+ *  ScoreBoard of top players
  *
- * Map<Rank, Player> scoreMap;
  *  Rank        Score       Name
- *  ----        ----        ----Score       Difficulty
- *  1           "Name", score: (finalChipValue), difficulty
- *  2           String, double, String
- *
- * Map<Integer, Player>
+ *  ----        ----        ----
+ *  1
+ *  2
  *
  */
 
@@ -20,9 +17,17 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public class ScoreBoard implements Serializable {
-
+    // Fields
     private static final String dataFilePath = "resources/scoreBoard.dat";
+    private SortedMap<Double, String> playerData = new TreeMap<>();      // player ranked by score <Score, Name>
+    private Map<Integer, Player> rankMap = loadMaps();    // Player data to display <Rank, Player(Score, Name)>
 
+    // Constructors
+    ScoreBoard() {
+        // prevent new
+    }
+
+    // Retrieve old scoreboard data, or create new board if first game
     public static ScoreBoard getInstance() {
         ScoreBoard board = null;
 
@@ -40,56 +45,22 @@ public class ScoreBoard implements Serializable {
         return board;
     }
 
-    private SortedMap<Double, String> playerMap = new TreeMap<>();      // player ranked by score <Score, Name>
-    private Map<Integer, Player> rankMap = loadMaps();    // Player data to display <Rank, Player(Score, Name)>
-
-
-    private  ScoreBoard() {
-        // prevent new
-    }
-
+    // Business Methods
+    // Used to update player data after games
     public void update(Player player) {
-
-        if (player.getPurse() > playerMap.firstKey()) {
-            playerMap.put(player.getPurse(), player.getName());
-            playerMap.remove(playerMap.firstKey());
+        if (player.getPurse() > playerData.firstKey()) {
+            playerData.put(player.getPurse(), player.getName());
+            playerData.remove(playerData.firstKey());
         }
-
         updateRankMap();
     }
 
-    private Map<Integer, Player> loadMaps() {
-        // TODO if dat file doesn't exist, read OG from csv
-
-        Map<Integer, Player> map = new TreeMap<>();
-
-        try {
-            List<String> lines = Files.readAllLines(Path.of("resources/starter-scoreboard.csv"));
-            for (String line: lines){
-                String[] tokens = line.split(",");
-                int rank = Integer.parseInt(tokens[0]);
-                double score = Double.parseDouble(tokens[1]);
-                String name = tokens[2];
-
-                // fill playerMap here to get rank structure
-                this.playerMap.put(score, name);
-
-                // fill rankMap
-                Player player = new Player(name, score);
-                map.put(rank, player);
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return map;
-    }
-
+    // Update the Rank structure
     private void updateRankMap(){
         int rank = 5;
 
         // rewrite rankMap w/ updated players
-        for (Map.Entry<Double, String> entry : playerMap.entrySet()) {
+        for (Map.Entry<Double, String> entry : playerData.entrySet()) {
             Player player = new Player(entry.getValue(), entry.getKey());
 
             rankMap.replace(rank, player);
@@ -97,17 +68,17 @@ public class ScoreBoard implements Serializable {
         }
     }
 
-    private void save() {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataFilePath))){
-            out.writeObject(this);
-        }
-        catch (IOException e) {
+    // Display the Highscore Board at the end of the Game
+    public void display() {
+        String boardBanner = "";
+
+        try {
+            boardBanner = Files.readString(Path.of("resources/highscore_board.txt"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public void display() {
-        System.out.println("BLACKJACK BETS HIGHSCORE BOARD");
+        System.out.println(boardBanner);
         System.out.println("==============================");
         System.out.println("Rank     Score     Name");
         System.out.println("----     -----     ----");
@@ -127,8 +98,58 @@ public class ScoreBoard implements Serializable {
         save();
     }
 
-    public Set<String> getRankedNames(){
-        return new HashSet<>(playerMap.values());
+    // Load Map data at the beginning of the game
+    private Map<Integer, Player> loadMaps() {
+        Map<Integer, Player> map = new TreeMap<>();
+        try {
+            List<String> lines = Files.readAllLines(Path.of("resources/starter-scoreboard.csv"));
+            for (String line: lines){
+                String[] tokens = line.split(",");
+                int rank = Integer.parseInt(tokens[0]);
+                double score = Double.parseDouble(tokens[1]);
+                String name = tokens[2];
+
+                // fill playerMap here to get rank structure
+                this.playerData.put(score, name);
+
+                // fill rankMap
+                Player player = new Player(name, score);
+                map.put(rank, player);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 
+    // Save board for future games
+    private void save() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataFilePath))){
+            out.writeObject(this);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Accessor Methods
+    public Set<String> getRankedNames(){
+        return new HashSet<>(playerData.values());
+    }
+
+    public Map<Integer, Player> getRankMap() {
+        return rankMap;
+    }
+
+    public Map<Double, String> getPlayerData() {
+        return playerData;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                " playerData=" + getPlayerData() +
+                ", rankMap=" + getRankMap();
+    }
 }
