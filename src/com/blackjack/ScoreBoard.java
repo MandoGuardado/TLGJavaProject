@@ -40,27 +40,25 @@ public class ScoreBoard implements Serializable {
         return board;
     }
 
-    private SortedMap<Double, String> playerMap = new TreeMap<>();      // player ranked by score <Score, Name>
+    private SortedMap<Double, String> playerData = new TreeMap<>();      // player ranked by score <Score, Name>
     private Map<Integer, Player> rankMap = loadMaps();    // Player data to display <Rank, Player(Score, Name)>
 
 
-    private  ScoreBoard() {
+    ScoreBoard() {
         // prevent new
     }
 
     public void update(Player player) {
 
-        if (player.getPurse() > playerMap.firstKey()) {
-            playerMap.put(player.getPurse(), player.getName());
-            playerMap.remove(playerMap.firstKey());
+        if (player.getPurse() > playerData.firstKey()) {
+            playerData.put(player.getPurse(), player.getName());
+            playerData.remove(playerData.firstKey());
         }
 
         updateRankMap();
     }
 
     private Map<Integer, Player> loadMaps() {
-        // TODO if dat file doesn't exist, read OG from csv
-
         Map<Integer, Player> map = new TreeMap<>();
 
         try {
@@ -72,7 +70,7 @@ public class ScoreBoard implements Serializable {
                 String name = tokens[2];
 
                 // fill playerMap here to get rank structure
-                this.playerMap.put(score, name);
+                this.playerData.put(score, name);
 
                 // fill rankMap
                 Player player = new Player(name, score);
@@ -89,7 +87,7 @@ public class ScoreBoard implements Serializable {
         int rank = 5;
 
         // rewrite rankMap w/ updated players
-        for (Map.Entry<Double, String> entry : playerMap.entrySet()) {
+        for (Map.Entry<Double, String> entry : playerData.entrySet()) {
             Player player = new Player(entry.getValue(), entry.getKey());
 
             rankMap.replace(rank, player);
@@ -128,7 +126,14 @@ public class ScoreBoard implements Serializable {
     }
 
     public Set<String> getRankedNames(){
-        return new HashSet<>(playerMap.values());
+        return new HashSet<>(playerData.values());
     }
 
+    public Map<Integer, Player> getRankMap() {
+        return rankMap;
+    }
+
+    public Map<Double, String> getPlayerData() {
+        return playerData;
+    }
 }
