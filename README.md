@@ -4,8 +4,11 @@ Console based imitation of Blackjack game.
 
 ## Description
 
-Blackjack Bets is console driven game that allows a single player to compete against the house(dealer). The objective
-is to get a hand total closer to 21 than the dealer without going over 21. Both dealer and player start with two cards each.
+Blackjack Bets is a console based game that allows a single player to compete against the 
+house(dealer) and bet on each hand. The objective is to get a hand total closer to 21 than
+the dealer without going over 21. Both dealer and player start with two cards each and the 
+player can bet at the beginning of each hand. Attaining a highscore will get your name added 
+to the HighScore Table.
 
 ## Getting Started
 
@@ -20,8 +23,8 @@ is to get a hand total closer to 21 than the dealer without going over 21. Both 
 
 ### Executing program
 
-* First: Using command line navigate to root folder.
-* Using the command below program should build and game would initiate.
+* First: Open a command line and navigate to the root folder of the game.
+* Using the command below, program will build and game will initiate.
 ```
 run
 ```
@@ -32,8 +35,8 @@ run
 
 
 
-* Armando Guardado GitHub Account: https://github.com/MandoGuardado
-* Rian Boren GitHub Account: https://github.com/rianBoren
+* Armando Guardado, GitHub Account: https://github.com/MandoGuardado
+* Rian Boren, GitHub Account: https://github.com/rianBoren
 
 ## Version History
 
