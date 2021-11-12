@@ -125,10 +125,10 @@ public class BlackJackApp {
     private void printCurrentStatus() {
         System.out.println();
         printStringBuilder(player.printPlayerCards());
-        System.out.println(player.getName() + " " + (isHandBlackjack() ? "Final" : "") + " hand: " + player.getHand().getArrayValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + player.getHand().getHandScore());
+        System.out.println(player.getName() + " " + (isHandBlackjack() ? "Final" : "") + " hand: " + player.getHand().getCardValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + player.getHand().getHandScore());
         System.out.println();
         printStringBuilder(dealer.printDealerCards());
-        System.out.println("Dealers" + (isHandBlackjack() ? " Final" : "") + " hand: " + dealer.getHand().getArrayValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + dealer.getHand().getHandScore());
+        System.out.println("Dealers" + (isHandBlackjack() ? " Final" : "") + " hand: " + dealer.getHand().getCardValues() + ", " + (isHandBlackjack() ? "Final" : "") + " score: " + dealer.getHand().getHandScore());
         System.out.println();
     }
 
@@ -159,7 +159,7 @@ public class BlackJackApp {
         int playersFinalScore = player.getHand().getHandScore();
         int dealersFinalScore = dealer.getHand().getHandScore();
         String winnerCase;     // to determine win cases in updateScore()
-
+        System.out.println("*******************************************");
         if (playersFinalScore > 21 && dealersFinalScore > 21) {
             System.out.println("Dealer Wins! " + name + " went over 21.");
             winnerCase = "lose";
@@ -185,6 +185,7 @@ public class BlackJackApp {
             System.out.println("Dealer wins!");
             winnerCase = "lose";
         }
+        System.out.println("*******************************************");
         updateScore(winnerCase);
     }
 
