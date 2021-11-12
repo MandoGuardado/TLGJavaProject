@@ -1,6 +1,6 @@
 # Blackjack Bets
 
-Simple overview of use/purpose.
+Console based imitation of Blackjack game.
 
 ## Description
 
